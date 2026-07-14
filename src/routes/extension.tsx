@@ -98,6 +98,15 @@ function ExtensionDownloadPage() {
           <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-ink)]">
             ~862 KB · Manifest V3 · works in Chrome, Edge, Brave, Arc, Opera
           </p>
+
+          <a
+            href="https://unlimitly.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border border-[color:var(--color-gold)]/50 bg-white/60 px-6 py-3 text-sm font-medium text-[color:var(--color-espresso)] backdrop-blur transition-all hover:bg-[color:var(--color-gold)] hover:text-[color:var(--color-espresso)]"
+          >
+            Open Dashboard ↗
+          </a>
         </section>
 
         {/* WHAT'S INSIDE */}
