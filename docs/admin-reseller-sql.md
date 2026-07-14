@@ -64,7 +64,7 @@ end $$;
 
 ```sql
 create or replace function public.unl_duration_to_expiry(p_duration text)
-returns timestamptz language sql immutable as $$
+returns timestamptz language sql stable as $$
   select case p_duration
     when '1m' then now() + interval '30 days'
     when '3m' then now() + interval '90 days'
@@ -74,6 +74,30 @@ returns timestamptz language sql immutable as $$
     else now() + interval '30 days'
   end
 $$;
+
+-- Compatibility alias for older activation RPCs that still call
+-- unl_duration_to_expire(...). Safe to keep permanently.
+create or replace function public.unl_duration_to_expire(p_duration text)
+returns timestamptz
+language sql stable
+set search_path = public
+as $$
+  select public.unl_duration_to_expiry(p_duration)
+$$;
+
+-- If your project has a key_duration enum, this overload is required because
+-- Postgres resolves unl_duration_to_expire(key_duration) separately from text.
+create or replace function public.unl_duration_to_expire(p_duration public.key_duration)
+returns timestamptz
+language sql stable
+set search_path = public
+as $$
+  select public.unl_duration_to_expiry(p_duration::text)
+$$;
+
+grant execute on function public.unl_duration_to_expiry(text) to anon, authenticated;
+grant execute on function public.unl_duration_to_expire(text) to anon, authenticated;
+grant execute on function public.unl_duration_to_expire(public.key_duration) to anon, authenticated;
 ```
 
 ## ADMIN RPCs
