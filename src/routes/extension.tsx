@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/extension")({
   head: () => ({
@@ -20,8 +21,13 @@ export const Route = createFileRoute("/extension")({
 });
 
 function ExtensionDownloadPage() {
+  const [loading, setLoading] = useState(false);
   const download = () => {
-    fetch("/unlimitly-extension.zip")
+    if (loading) return;
+    setLoading(true);
+    // Cache-bust so users always get the latest build, never a stale CDN copy.
+    const url = `/unlimitly-extension.zip?v=${Date.now()}`;
+    fetch(url, { cache: "no-store" })
       .then((res) => {
         if (!res.ok) throw new Error(`Download failed: ${res.status}`);
         return res.blob();
@@ -33,7 +39,8 @@ function ExtensionDownloadPage() {
         a.click();
         URL.revokeObjectURL(a.href);
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => alert(err.message))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -85,6 +92,7 @@ function ExtensionDownloadPage() {
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
             <span className="relative">Download unlimitly-extension.zip</span>
+            {loading && <span className="relative text-xs opacity-70">· preparing…</span>}
           </button>
 
           <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-ink)]">
