@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 
 export const Route = createFileRoute("/extension")({
   head: () => ({
@@ -21,27 +20,7 @@ export const Route = createFileRoute("/extension")({
 });
 
 function ExtensionDownloadPage() {
-  const [loading, setLoading] = useState(false);
-  const download = () => {
-    if (loading) return;
-    setLoading(true);
-    // Cache-bust so users always get the latest build, never a stale CDN copy.
-    const url = `/unlimitly-extension.zip?v=${Date.now()}`;
-    fetch(url, { cache: "no-store" })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Download failed: ${res.status}`);
-        return res.blob();
-      })
-      .then((blob) => {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = "unlimitly-extension.zip";
-        a.click();
-        URL.revokeObjectURL(a.href);
-      })
-      .catch((err) => alert(err.message))
-      .finally(() => setLoading(false));
-  };
+  const ZIP_URL = "/unlimitly-extension.zip";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[color:var(--color-cream)] text-[color:var(--color-espresso)]">
@@ -80,9 +59,9 @@ function ExtensionDownloadPage() {
           </p>
 
           {/* Primary download */}
-          <button
-            type="button"
-            onClick={download}
+          <a
+            href={ZIP_URL}
+            download="unlimitly-extension.zip"
             className="group relative mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--color-espresso)] px-10 py-5 text-base font-medium text-[color:var(--color-cream)] shadow-[0_20px_60px_-20px_rgba(201,168,76,0.55)] transition-all hover:scale-[1.02] hover:bg-[color:var(--color-gold)] hover:text-[color:var(--color-espresso)]"
           >
             <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[color:var(--color-gold)]/0 via-[color:var(--color-gold)]/30 to-[color:var(--color-gold)]/0 opacity-0 transition-opacity group-hover:opacity-100" />
@@ -92,8 +71,7 @@ function ExtensionDownloadPage() {
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
             <span className="relative">Download unlimitly-extension.zip</span>
-            {loading && <span className="relative text-xs opacity-70">· preparing…</span>}
-          </button>
+          </a>
 
           <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-ink)]">
             ~862 KB · Manifest V3 · works in Chrome, Edge, Brave, Arc, Opera
@@ -169,13 +147,13 @@ function ExtensionDownloadPage() {
           <p className="font-display italic-serif text-3xl text-[color:var(--color-espresso)]">
             Ready when you are.
           </p>
-          <button
-            type="button"
-            onClick={download}
+          <a
+            href={ZIP_URL}
+            download="unlimitly-extension.zip"
             className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-[color:var(--color-espresso)] bg-transparent px-8 py-4 text-sm font-medium text-[color:var(--color-espresso)] transition-all hover:bg-[color:var(--color-espresso)] hover:text-[color:var(--color-cream)]"
           >
             ⬇ Grab the zip
-          </button>
+          </a>
           <a
             href="/"
             className="mt-6 text-xs uppercase tracking-[0.22em] text-[color:var(--color-muted-ink)] hover:text-[color:var(--color-gold)] transition-colors"
