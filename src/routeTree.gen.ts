@@ -13,6 +13,7 @@ import { Route as ResellersOgRouteImport } from './routes/resellers-og'
 import { Route as ExtensionRouteImport } from './routes/extension'
 import { Route as AdminOgRouteImport } from './routes/admin-og'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicDownloadExtensionRouteImport } from './routes/api.public.download-extension'
 
 const ResellersOgRoute = ResellersOgRouteImport.update({
   id: '/resellers-og',
@@ -34,18 +35,26 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicDownloadExtensionRoute =
+  ApiPublicDownloadExtensionRouteImport.update({
+    id: '/api/public/download-extension',
+    path: '/api/public/download-extension',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin-og': typeof AdminOgRoute
   '/extension': typeof ExtensionRoute
   '/resellers-og': typeof ResellersOgRoute
+  '/api/public/download-extension': typeof ApiPublicDownloadExtensionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin-og': typeof AdminOgRoute
   '/extension': typeof ExtensionRoute
   '/resellers-og': typeof ResellersOgRoute
+  '/api/public/download-extension': typeof ApiPublicDownloadExtensionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +62,30 @@ export interface FileRoutesById {
   '/admin-og': typeof AdminOgRoute
   '/extension': typeof ExtensionRoute
   '/resellers-og': typeof ResellersOgRoute
+  '/api/public/download-extension': typeof ApiPublicDownloadExtensionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin-og' | '/extension' | '/resellers-og'
+  fullPaths:
+    | '/'
+    | '/admin-og'
+    | '/extension'
+    | '/resellers-og'
+    | '/api/public/download-extension'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin-og' | '/extension' | '/resellers-og'
-  id: '__root__' | '/' | '/admin-og' | '/extension' | '/resellers-og'
+  to:
+    | '/'
+    | '/admin-og'
+    | '/extension'
+    | '/resellers-og'
+    | '/api/public/download-extension'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin-og'
+    | '/extension'
+    | '/resellers-og'
+    | '/api/public/download-extension'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +93,7 @@ export interface RootRouteChildren {
   AdminOgRoute: typeof AdminOgRoute
   ExtensionRoute: typeof ExtensionRoute
   ResellersOgRoute: typeof ResellersOgRoute
+  ApiPublicDownloadExtensionRoute: typeof ApiPublicDownloadExtensionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/download-extension': {
+      id: '/api/public/download-extension'
+      path: '/api/public/download-extension'
+      fullPath: '/api/public/download-extension'
+      preLoaderRoute: typeof ApiPublicDownloadExtensionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +141,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOgRoute: AdminOgRoute,
   ExtensionRoute: ExtensionRoute,
   ResellersOgRoute: ResellersOgRoute,
+  ApiPublicDownloadExtensionRoute: ApiPublicDownloadExtensionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
