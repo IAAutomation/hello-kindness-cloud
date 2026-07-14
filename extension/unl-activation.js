@@ -200,7 +200,7 @@
             [STORAGE_KEYS.activated]: true,
             [STORAGE_KEYS.key]: key,
             [STORAGE_KEYS.fp]: deviceFp,
-            [STORAGE_KEYS.expires]: row.expires_at || null,
+            [STORAGE_KEYS.expires]: row.out_expires_at || row.expires_at || null,
             [STORAGE_KEYS.firstOpen]: true
           });
           showVerified();
@@ -266,7 +266,7 @@
     try {
       const result = await validateKey(r[STORAGE_KEYS.key], r[STORAGE_KEYS.fp] || (await fp()));
       const row = Array.isArray(result) ? result[0] : result;
-      if (row && row.ok) return { ok: true, expires_at: row.expires_at || null };
+      if (row && row.ok) return { ok: true, expires_at: row.out_expires_at || row.expires_at || null };
       return { ok: false };
     } catch (e) {
       // Network failure: trust cached state so users aren't kicked out offline.
