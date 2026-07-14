@@ -864,18 +864,18 @@
         '<div class="ed-head"><span class="ed-num">02.</span><h2>Or borrow a <em>starting line</em></h2><span class="ed-rule"></span><span class="ed-note">tap one ↓</span></div>' +
         '<div class="ed-stamps sp-shortcuts-grid" id="sp-chips"></div>' +
       '</div>' +
-      // 03 · Advanced — stable action bar
+      // 03 · Tools — premium card grid
       '<div class="ed-sec">' +
-        '<div class="ed-head"><span class="ed-num">03.</span><h2>The <em>toolbar</em></h2><span class="ed-rule"></span><span class="ed-note">one tap each</span></div>' +
+        '<div class="ed-head"><span class="ed-num">03.</span><h2>Your <em>power tools</em></h2><span class="ed-rule"></span><span class="ed-note">one tap · zero friction</span></div>' +
         '<button type="button" class="sp-advanced-toggle ed-adv-toggle" id="sp-advanced-toggle" aria-expanded="true" aria-controls="sp-advanced-panel" style="display:none"></button>' +
-        '<div class="ed-actionbar sp-advanced-panel" id="sp-advanced-panel">' +
-          '<button id="sp-remove-watermark" class="ed-act ed-act-w" title="Remove watermark"><span class="ed-act-g">W</span><span class="ed-act-l">Watermark</span></button>' +
-          '<button id="sp-shield-btn" class="ed-act ed-act-s" title="Toggle Shield"><span class="ed-act-g">S</span><span class="ed-act-l"><span id="sp-shield-label">Shield</span></span></button>' +
-          '<button id="sp-native-chat-btn" class="ed-act ed-act-n" title="Native Chat"><span class="ed-act-g">N</span><span class="ed-act-l"><span id="sp-native-chat-label">Native</span></span></button>' +
-          '<button id="sp-download-project" class="ed-act ed-act-d" title="Download project"><span class="ed-act-g">D</span><span class="ed-act-l">Download</span></button>' +
-          '<button id="sp-quick-init" class="ed-act ed-act-c" title="Create new project"><span class="ed-act-g">C</span><span class="ed-act-l">Create</span></button>' +
-          '<button id="sp-publish-project" class="ed-act ed-act-p" title="Publish"><span class="ed-act-g">P</span><span class="ed-act-l">Publish</span></button>' +
-          '<button id="sp-enable-cloud" class="ed-act ed-act-cl" title="Enable Cloud"><span class="ed-act-g">☁</span><span class="ed-act-l">Cloud</span></button>' +
+        '<div class="ed-toolgrid sp-advanced-panel" id="sp-advanced-panel">' +
+          '<button id="sp-remove-watermark" class="ed-act ed-act-w" title="Remove watermark"><span class="ed-act-halo"></span><span class="ed-act-g">W</span><span class="ed-act-txt"><span class="ed-act-l">Watermark</span><span class="ed-act-sub">strip the badge</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-shield-btn" class="ed-act ed-act-s" title="Toggle Shield"><span class="ed-act-halo"></span><span class="ed-act-g">S</span><span class="ed-act-txt"><span class="ed-act-l"><span id="sp-shield-label">Shield</span></span><span class="ed-act-sub">protect your credits</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-native-chat-btn" class="ed-act ed-act-n" title="Native Chat"><span class="ed-act-halo"></span><span class="ed-act-g">N</span><span class="ed-act-txt"><span class="ed-act-l"><span id="sp-native-chat-label">Native</span></span><span class="ed-act-sub">chat inside Lovable</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-download-project" class="ed-act ed-act-d" title="Download project"><span class="ed-act-halo"></span><span class="ed-act-g">D</span><span class="ed-act-txt"><span class="ed-act-l">Download</span><span class="ed-act-sub">everything, zipped</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-quick-init" class="ed-act ed-act-c" title="Create new project"><span class="ed-act-halo"></span><span class="ed-act-g">C</span><span class="ed-act-txt"><span class="ed-act-l">Create</span><span class="ed-act-sub">a fresh project</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-publish-project" class="ed-act ed-act-p" title="Publish"><span class="ed-act-halo"></span><span class="ed-act-g">P</span><span class="ed-act-txt"><span class="ed-act-l">Publish</span><span class="ed-act-sub">ship it live</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-enable-cloud" class="ed-act ed-act-cl ed-act-wide" title="Enable Cloud"><span class="ed-act-halo"></span><span class="ed-act-g">☁</span><span class="ed-act-txt"><span class="ed-act-l">Enable Lovable Cloud</span><span class="ed-act-sub">database · auth · storage · edge functions</span></span><span class="ed-act-chevron">›</span></button>' +
         '</div>' +
       '</div>' +
       '<div id="sp-download-status" class="sp-log ed-log" style="display:none"></div>';
