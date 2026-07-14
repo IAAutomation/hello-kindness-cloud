@@ -753,13 +753,12 @@
           '<div class="sp-sync-status" id="sp-sync">⏳ Waiting for sync...</div>' +
           '<div class="sp-trial-countdown" id="sp-countdown" style="display:none"></div>' +
         '</div>' +
-        '<div id="sp-reseller-btn" style="display:none;margin-bottom:14px">' +
         '<div style="margin:10px 0 14px">' +
           '<a href="https://unlimitly.vercel.app" target="_blank" rel="noopener noreferrer" class="sp-btn-primary" style="display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none">' +
             '🚀 Open Dashboard' +
           '</a>' +
         '</div>' +
-        '<div id="sp-reseller-btn-DUPLICATE" style="display:none"></div>' +
+        '<div id="sp-reseller-btn" style="display:none;margin-bottom:14px">' +
           '<a href="' + ((typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL) || "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y") + '" target="_blank" rel="noopener noreferrer" class="pk-discord-cta">' +
             '🔑 Join our YouTube channel<span style="margin-left:auto;font-size:10px;opacity:0.6">→</span>' +
           '</a>' +
