@@ -240,7 +240,7 @@ function Landing() {
               className="h-7 w-7 rounded-2xl"
               style={{
                 background:
-                  "conic-gradient(from 130deg, oklch(0.42 0.06 220), oklch(0.6 0.06 200), oklch(0.75 0.05 160), oklch(0.88 0.03 95), oklch(0.42 0.06 220))",
+                  "conic-gradient(from 130deg, #FF61D6, #B7D7E8, #D8EAD7, #FFDCC2, #FF61D6)",
               }}
             />
             <div className="flex flex-col leading-none">
