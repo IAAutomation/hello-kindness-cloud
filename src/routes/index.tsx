@@ -50,7 +50,7 @@ function Section({
   id?: string;
   eyebrow: string;
   title: React.ReactNode;
-  lead?: string;
+  lead?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -64,7 +64,12 @@ function Section({
           {title}
         </h2>
         {lead && (
-          <p className="mx-auto mt-5 max-w-xl text-espresso/70">{lead}</p>
+          <div className="mx-auto mt-6 flex max-w-2xl flex-col items-center gap-3">
+            <span aria-hidden className="h-px w-14 bg-gradient-to-r from-transparent via-gold to-transparent" />
+            <p className="text-[15px] leading-relaxed text-espresso/75 md:text-base">
+              {lead}
+            </p>
+          </div>
         )}
       </div>
       {children}
