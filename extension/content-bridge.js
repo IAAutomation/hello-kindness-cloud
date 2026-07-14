@@ -12,7 +12,7 @@
         if (typeof window._pkS === 'undefined' || typeof window._pkS.destroy !== 'function') {
           throw new Error('x');
         }
-        if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Saqlain\'s Tech World') {
+        if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Unlimitly by Proflow Tools') {
           throw new Error('x');
         }
       } catch(e) {

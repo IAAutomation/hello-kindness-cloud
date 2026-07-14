@@ -1,70 +1,120 @@
 :root {
-  color-scheme: dark;
-  --ql-bg: #0b1020;
-  --ql-bg-elevated: #111827;
-  --ql-bg-surface: #1f2937;
-  --ql-bg-hover: #273449;
-  --ql-border: #334155;
-  --ql-border-hover: #3b82f6;
-  --ql-text-primary: #f8fafc;
-  --ql-text-secondary: #e2e8f0;
-  --ql-text-muted: #cbd5e1;
-  --ql-accent: #2563eb;
-  --ql-accent-hover: #1d4ed8;
-  --ql-accent-glow: rgba(37, 99, 235, 0.28);
-  --ql-accent-subtle: rgba(37, 99, 235, 0.14);
-  --ql-link: #3b82f6;
-  --ql-gradient-primary: #2563eb;
-  --ql-gradient-shimmer: #2563eb;
-  --ql-success: #10b981;
-  --ql-success-bg: rgba(0, 255, 136, 0.1);
-  --ql-warning: #f59e0b;
-  --ql-warning-bg: rgba(255, 187, 0, 0.12);
-  --ql-danger: #ef4444;
-  --ql-danger-bg: rgba(255, 51, 102, 0.12);
-  --ql-radius: 16px;
+  /* Unlimitly · Editorial Ivory & Gold — light-first, matches landing site. */
+  color-scheme: light;
+  --ql-bg: #FBF8F1;            /* warm ivory canvas */
+  --ql-bg-elevated: #FFFDF7;   /* near-white paper */
+  --ql-bg-surface: #F5EEDD;    /* soft sand */
+  --ql-bg-hover: #EFE5CE;      /* parchment */
+  --ql-border: rgba(27, 26, 23, 0.10);
+  --ql-border-hover: #C9A84C;
+  --ql-text-primary: #1B1A17;  /* deep espresso ink */
+  --ql-text-secondary: #2A2823;
+  --ql-text-muted: #6B655A;
+  --ql-accent: #C9A84C;        /* signature gold */
+  --ql-accent-hover: #B8942F;
+  --ql-accent-glow: rgba(201, 168, 76, 0.28);
+  --ql-accent-subtle: rgba(201, 168, 76, 0.14);
+  --ql-link: #B8860B;
+  --ql-gradient-primary: linear-gradient(120deg, #C9A84C 0%, #F0D78C 50%, #C9A84C 100%);
+  --ql-gradient-shimmer: linear-gradient(120deg, #C9A84C, #F0D78C, #C9A84C);
+  --ql-success: #4C7A3F;
+  --ql-success-bg: rgba(76, 122, 63, 0.10);
+  --ql-warning: #B8860B;
+  --ql-warning-bg: rgba(240, 215, 140, 0.28);
+  --ql-danger: #B4472A;
+  --ql-danger-bg: rgba(180, 71, 42, 0.10);
+  --ql-radius: 14px;
   --ql-radius-sm: 10px;
   --ql-radius-xs: 8px;
-  --ql-shadow: 0 12px 60px rgba(37, 99, 235, 0.08), 0 8px 32px rgba(0, 0, 0, 0.6);
-  --ql-shadow-hover: 0 20px 80px rgba(37, 99, 235, 0.12), 0 12px 40px rgba(0, 0, 0, 0.7);
+  --ql-shadow: 0 1px 0 rgba(27,26,23,0.04), 0 12px 40px -12px rgba(27,26,23,0.14);
+  --ql-shadow-hover: 0 2px 0 rgba(27,26,23,0.05), 0 20px 60px -16px rgba(201,168,76,0.35);
   --ql-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --ql-glass: rgba(5, 8, 15, 0.8);
-  --ql-overlay: rgba(0, 0, 0, 0.8);
-  --ql-modal-bg: #111827;
-  --ql-modal-surface: #1f2937;
-  --ql-chat-bubble-end: #2563eb;
-  --ql-font: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ql-glass: rgba(251, 248, 241, 0.85);
+  --ql-overlay: rgba(27, 26, 23, 0.45);
+  --ql-modal-bg: #FFFDF7;
+  --ql-modal-surface: #F5EEDD;
+  --ql-chat-bubble-end: #C9A84C;
+  --ql-font: 'Work Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ql-font-display: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
 }
 
 body.sp-light, #ql-floating.ql-light {
+  /* Sp-light stays close to the default ivory theme (already light-first). */
   color-scheme: light;
-  --ql-bg: #e8f0fe;
-  --ql-bg-elevated: #ffffff;
-  --ql-bg-surface: #dce8f8;
-  --ql-bg-hover: #c8d8f0;
-  --ql-border: rgba(0, 120, 200, 0.1);
-  --ql-border-hover: rgba(0, 120, 200, 0.2);
-  --ql-text-primary: #05102a;
-  --ql-text-secondary: #1a4a7a;
-  --ql-text-muted: #3a7aaa;
-  --ql-accent: #2563eb;
-  --ql-accent-hover: #1d4ed8;
-  --ql-accent-glow: rgba(37, 99, 235, 0.16);
-  --ql-accent-subtle: rgba(37, 99, 235, 0.10);
-  --ql-link: #2563eb;
-  --ql-gradient-primary: #2563eb;
-  --ql-gradient-shimmer: #2563eb;
-  --ql-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
-  --ql-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
-  --ql-glass: rgba(255, 255, 255, 0.85);
-  --ql-overlay: rgba(0, 0, 0, 0.35);
-  --ql-modal-bg: #ffffff;
-  --ql-modal-surface: #e8f0fe;
-  --ql-chat-bubble-end: #2563eb;
+  --ql-bg: #FFFDF7;
+  --ql-bg-elevated: #FFFFFF;
+  --ql-bg-surface: #FBF8F1;
+  --ql-bg-hover: #F5EEDD;
+  --ql-border: rgba(27, 26, 23, 0.08);
+  --ql-border-hover: #C9A84C;
+  --ql-text-primary: #1B1A17;
+  --ql-text-secondary: #2A2823;
+  --ql-text-muted: #6B655A;
+  --ql-accent: #C9A84C;
+  --ql-accent-hover: #B8942F;
+  --ql-accent-glow: rgba(201, 168, 76, 0.18);
+  --ql-accent-subtle: rgba(201, 168, 76, 0.10);
+  --ql-link: #B8860B;
+  --ql-gradient-primary: linear-gradient(120deg, #C9A84C, #F0D78C, #C9A84C);
+  --ql-gradient-shimmer: linear-gradient(120deg, #C9A84C, #F0D78C, #C9A84C);
+  --ql-shadow: 0 1px 0 rgba(27,26,23,0.03), 0 10px 30px -12px rgba(27,26,23,0.12);
+  --ql-shadow-hover: 0 2px 0 rgba(27,26,23,0.05), 0 18px 50px -16px rgba(201,168,76,0.30);
+  --ql-glass: rgba(255, 253, 247, 0.92);
+  --ql-overlay: rgba(27, 26, 23, 0.35);
+  --ql-modal-bg: #FFFFFF;
+  --ql-modal-surface: #FBF8F1;
+  --ql-chat-bubble-end: #C9A84C;
+}
+
+/* Opt-in Noir dark mode for users who toggle it (keeps the same gold accent). */
+body.sp-dark, #ql-floating.ql-dark {
+  color-scheme: dark;
+  --ql-bg: #0d0d0d;
+  --ql-bg-elevated: #141414;
+  --ql-bg-surface: #1a1a1a;
+  --ql-bg-hover: #232323;
+  --ql-border: rgba(201, 168, 76, 0.20);
+  --ql-border-hover: #C9A84C;
+  --ql-text-primary: #FBF8F1;
+  --ql-text-secondary: #E7DFCB;
+  --ql-text-muted: #A69C86;
+  --ql-accent: #C9A84C;
+  --ql-accent-hover: #F0D78C;
+  --ql-accent-glow: rgba(201, 168, 76, 0.28);
+  --ql-accent-subtle: rgba(201, 168, 76, 0.12);
+  --ql-link: #F0D78C;
+  --ql-glass: rgba(13, 13, 13, 0.85);
+  --ql-overlay: rgba(0, 0, 0, 0.7);
+  --ql-modal-bg: #141414;
+  --ql-modal-surface: #1a1a1a;
 }
 
 body {
   background: var(--ql-bg);
+  font-family: var(--ql-font);
+  color: var(--ql-text-primary);
+}
+
+/* Editorial display treatment for section titles across the extension. */
+.sp-brand-text, .ql-title, .ql-brand-name,
+.sp-modal-title, .pk-publish-modal h3,
+.sp-community-title, .ql-community-title,
+.sp-header .sp-brand-copy .sp-brand-text {
+  font-family: var(--ql-font-display);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+/* Gold hairline underline accent used under the brand mark. */
+.sp-brand::after, .ql-brand::after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--ql-accent) 40%, var(--ql-accent) 60%, transparent);
+  opacity: 0.4;
+  margin-top: 4px;
 }
 
 .sp-btn-feature {

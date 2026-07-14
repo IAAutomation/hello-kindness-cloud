@@ -1,5 +1,5 @@
 // ============================================================
-// Saqlain\'s Tech World - Side Panel Templates (Static/HTML)
+// Unlimitly by Proflow Tools - Side Panel Templates (Static/HTML)
 // Separated from business logic for easier maintenance
 // ============================================================
 
@@ -18,7 +18,7 @@ const SP_SVG = {
 };
 
 const SP_WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y';
-const SP_YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@saqlainstechworld';
+const SP_YOUTUBE_CHANNEL_URL = 'https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y';
 
 const SP_TEMPLATES = [
   { icon: SP_SVG.wrench, label: "Bugs", prompt: "Analyze the code and identify all bugs, errors, and failures. Fix each one and explain the problem and the solution applied." },
@@ -77,7 +77,7 @@ function spTemplateMainUI(greeting, statusBadge) {
       '<div class="sp-trial-countdown" id="sp-countdown" style="display:none"></div>' +
     '</div>' +
     '<div id="sp-reseller-btn" style="display:none;margin-bottom:14px">' +
-      '<a href="' + ((typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL) || "https://www.youtube.com/@saqlainstechworld") + '" target="_blank" rel="noopener noreferrer" class="pk-discord-cta">' +
+      '<a href="' + ((typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL) || "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y") + '" target="_blank" rel="noopener noreferrer" class="pk-discord-cta">' +
         '🔑 Join our YouTube channel<span style="margin-left:auto;font-size:10px;opacity:0.6">→</span>' +
       '</a>' +
     '</div>' +

@@ -1,5 +1,5 @@
 // ============================================
-// Saqlain\'s Tech World – Hardware Fingerprint
+// Unlimitly by Proflow Tools – Hardware Fingerprint
 // Generates a stable device hash from hardware
 // attributes that persist across browsers/cache
 // ============================================

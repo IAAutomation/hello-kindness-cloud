@@ -1,4 +1,4 @@
-/* Saqlain's Tech World - Futuristic Premium UI */
+/* Unlimitly by Proflow Tools - Futuristic Premium UI */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* Custom scrollbars inside the floating widget */
@@ -2157,7 +2157,7 @@
 
 
 
-/* ===== Saqlain layout polish: brand subtitle, community popup, high-contrast buttons ===== */
+/* ===== Unlimitly layout polish: brand subtitle, community popup, high-contrast buttons ===== */
 .ql-brand-copy, .ql-title-stack { display:flex; flex-direction:column; line-height:1.05; min-width:0; }
 .ql-brand-name { color:var(--ql-accent); font-weight:800; }
 .ql-brand-subtitle, .ql-title-stack small { margin-top:3px; font-size:9px; font-weight:800; letter-spacing:0.18em; text-transform:uppercase; color:var(--ql-text-secondary); opacity:0.95; }

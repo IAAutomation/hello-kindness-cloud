@@ -26,9 +26,9 @@
     } catch(e) {}
   }
 
-  _f('EXTENSION_NAME', 'Saqlain\'s Tech World');
+  _f('EXTENSION_NAME', 'Unlimitly by Proflow Tools');
   _f('EXTENSION_VERSION', '1.1.7');
-  _f('DEFAULT_LICENSE_USER_NAME', 'Saqlain\'s Tech World User');
+  _f('DEFAULT_LICENSE_USER_NAME', 'Unlimitly by Proflow Tools User');
   _f('POWERKITS_API_BASE', _e.b);
   _f('POWERKITS_API_KEY', _e.k);
   _f('GRINGOW_API_BASE', _e.b);
@@ -65,7 +65,7 @@
       if (typeof window._pkS === 'undefined' || typeof window._pkS.integrityToken === 'undefined') {
         throw new Error('x');
       }
-      if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Saqlain\'s Tech World') {
+      if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Unlimitly by Proflow Tools') {
         throw new Error('x');
       }
     } catch(e) {
@@ -82,7 +82,7 @@ function extensionVersionShort() {
 }
 
 function extensionFooterBadge() {
-  var name = typeof EXTENSION_NAME !== "undefined" ? String(EXTENSION_NAME) : "Saqlain\'s Tech World";
+  var name = typeof EXTENSION_NAME !== "undefined" ? String(EXTENSION_NAME) : "Unlimitly by Proflow Tools";
   return name + " • v" + extensionVersionShort();
 }
 
@@ -97,10 +97,10 @@ function gringowApiHeaders(extra) {
 function normalizeLicenseUserName(name) {
   var n = String(name || "").trim();
   if (n.toLowerCase().indexOf("empire lovable") !== -1) {
-    return typeof DEFAULT_LICENSE_USER_NAME !== 'undefined' ? DEFAULT_LICENSE_USER_NAME : "Saqlain\'s Tech World User";
+    return typeof DEFAULT_LICENSE_USER_NAME !== 'undefined' ? DEFAULT_LICENSE_USER_NAME : "Unlimitly by Proflow Tools User";
   }
   if (!n || n.toLowerCase() === "test" || n.toLowerCase() === "user" || /gringow|powerkits/i.test(n)) {
-    return typeof DEFAULT_LICENSE_USER_NAME !== 'undefined' ? DEFAULT_LICENSE_USER_NAME : "Saqlain\'s Tech World User";
+    return typeof DEFAULT_LICENSE_USER_NAME !== 'undefined' ? DEFAULT_LICENSE_USER_NAME : "Unlimitly by Proflow Tools User";
   }
   return n;
 }

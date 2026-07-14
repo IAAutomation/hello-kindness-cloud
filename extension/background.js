@@ -1,4 +1,4 @@
-console.log("[Background] Saqlain\'s Tech World service worker started");
+console.log("[Background] Unlimitly by Proflow Tools service worker started");
 
 function decodeJwtExpMs(token) {
   try {

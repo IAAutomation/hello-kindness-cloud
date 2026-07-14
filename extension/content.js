@@ -1,5 +1,5 @@
 // ============================================
-// Saqlain\'s Tech World – Business Logic (content)
+// Unlimitly by Proflow Tools – Business Logic (content)
 // HTML templates are in content-templates.js
 // ============================================
 
@@ -9,7 +9,7 @@
       if (typeof window._pkS === 'undefined' || typeof window._pkS.destroy !== 'function') {
         throw new Error('x');
       }
-      if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Saqlain\'s Tech World') {
+      if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Unlimitly by Proflow Tools') {
         throw new Error('x');
       }
     } catch(e) {
@@ -22,7 +22,7 @@
   }, 2500);
 })();
 
-console.log("[ContentScript] Saqlain\'s Tech World loaded");
+console.log("[ContentScript] Unlimitly by Proflow Tools loaded");
 
 const API_BASE = typeof POWERKITS_API_BASE !== "undefined" ? POWERKITS_API_BASE : GRINGOW_API_BASE;
 const API_KEY = typeof POWERKITS_API_KEY !== "undefined" ? POWERKITS_API_KEY : GRINGOW_API_KEY;
@@ -30,7 +30,7 @@ const PROXY_COMMAND_URL = (typeof window !== "undefined" && window.PROXY_COMMAND
   || (API_BASE + "/functions/v1/proxy-command");
 
 const DISCORD_URL = (typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL)
-  || "https://www.youtube.com/@saqlainstechworld";
+  || "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y";
 const VALIDATE_URL = API_BASE + "/functions/v1/validate-license";
 const OPTIMIZE_URL = API_BASE + "/functions/v1/optimize-prompt";
 const NOTIFICATIONS_URL = API_BASE + "/rest/v1/notifications?select=*&order=created_at.desc&limit=20";
@@ -570,7 +570,7 @@ function showChannelGate(box) {
     const btn = document.getElementById("ql-join-channel-btn");
     if(btn) {
       btn.addEventListener("click", () => {
-        chrome.runtime.sendMessage({ action: "openTab", url: "https://www.youtube.com/@saqlainstechworld" });
+        chrome.runtime.sendMessage({ action: "openTab", url: "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y" });
         chrome.storage.local.set({ ql_channel_redirected: true }, () => {
           box.remove();
           _buildFloatingUI();
@@ -1480,7 +1480,7 @@ function injectShieldOverlay(){
   overlay.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' +
     '</svg>' +
-    '<span class="ql-shield-overlay-text">🛡️ Protected by Saqlain\'s Tech World</span>' +
+    '<span class="ql-shield-overlay-text">🛡️ Protected by Unlimitly by Proflow Tools</span>' +
     '<span class="ql-shield-overlay-sub">Use the extension to send prompts</span>';
 
   overlay.addEventListener('click', (e) => {
@@ -1652,7 +1652,7 @@ async function showPaymentUI(box, preselectedPkg){
       var idx = parseInt(card.getAttribute("data-brl-idx"), 10) || 0;
       var plan = QL_BRL_PLANS[idx];
       if(!plan) return;
-      var msg = "Hello! 👋 I am interested in the *" + plan.name + "* plan for Saqlain\'s Tech World (R$ " + plan.price + " - " + plan.period + ").\n\nOpen channel for more information.";
+      var msg = "Hello! 👋 I am interested in the *" + plan.name + "* plan for Unlimitly by Proflow Tools (R$ " + plan.price + " - " + plan.period + ").\n\nOpen channel for more information.";
       var url = DISCORD_URL;
       window.open(url, "_blank", "noopener,noreferrer");
     });
@@ -2835,7 +2835,7 @@ function injectNativeChatOverlay() {
     const badge = document.createElement("div");
     badge.id = "ql-native-badge";
     badge.className = "ql-native-badge";
-    badge.innerHTML = "⚡ <span>Saqlain\'s Tech World</span>";
+    badge.innerHTML = "⚡ <span>Unlimitly by Proflow Tools</span>";
     chatForm.appendChild(badge);
   }
 
