@@ -781,48 +781,105 @@
   function showMainUIContent() {
     var container = document.getElementById('sp-tab-content');
     if (!container) return;
+    // Editorial layout — preserves every ID the existing handlers bind to.
     container.innerHTML =
-      '<textarea class="sp-textarea" id="sp-msg" rows="3" placeholder="Type your command..." spellcheck="false"></textarea>' +
-      '<div id="sp-attach-preview" class="sp-attach-preview" style="display:none"></div>' +
-      '<div class="sp-action-bar">' +
-        '<div class="sp-action-left"><label class="sp-toggle"><input type="checkbox" id="sp-modo-plano"><span class="sp-toggle-slider"></span></label><span class="sp-toggle-label">Plan</span></div>' +
-        '<div class="sp-action-center">' +
-          '<button class="sp-attach-btn" id="sp-attach-btn" title="Attach file">📎</button>' +
-          '<button class="sp-tool-btn" id="sp-optimize" title="Optimize with AI">' + SP_SVG.sparkles + '</button>' +
-          '<button class="sp-tool-btn" id="sp-speech" title="Voice">' + SP_SVG.mic + '</button>' +
+      '<div class="ed-runhead"><span class="ed-pin"></span><span>Connected · lovable.dev</span><span class="ed-grow"></span><span class="ed-credit">unlimited today</span></div>' +
+      // 01 · Compose
+      '<div class="ed-sec">' +
+        '<div class="ed-head"><span class="ed-num">01.</span><h2>Say what you\'re <em>trying to make</em></h2><span class="ed-rule"></span><span class="ed-note">write freely →</span></div>' +
+        '<div class="ed-card">' +
+          '<textarea class="sp-textarea ed-textarea" id="sp-msg" rows="3" placeholder="a landing page for my dad\'s bakery, warm and honest…" spellcheck="false"></textarea>' +
+          '<div id="sp-attach-preview" class="sp-attach-preview" style="display:none"></div>' +
+          '<div class="ed-pfoot">' +
+            '<div class="ed-left-tools">' +
+              '<label class="sp-toggle" title="Plan mode"><input type="checkbox" id="sp-modo-plano"><span class="sp-toggle-slider"></span></label>' +
+              '<span class="ed-hint">plan</span>' +
+              '<button class="ed-mini" id="sp-attach-btn" title="Attach file">📎</button>' +
+              '<button class="ed-mini" id="sp-optimize" title="Optimize with AI">' + SP_SVG.sparkles + '</button>' +
+              '<button class="ed-mini" id="sp-speech" title="Voice">' + SP_SVG.mic + '</button>' +
+            '</div>' +
+            '<button class="ed-send sp-send-btn" id="sp-send">Send it →</button>' +
+          '</div>' +
         '</div>' +
-        '<button class="sp-send-btn" id="sp-send">Send</button>' +
       '</div>' +
       '<input type="file" id="sp-file-input" multiple style="display:none" accept="*/*">' +
-      '<div class="sp-log" id="sp-log"></div>' +
-      '<span class="sp-shortcuts-title">QUICK SHORTCUTS</span>' +
-      '<div class="sp-shortcuts-grid" id="sp-chips"></div>' +
-      '<button type="button" class="sp-advanced-toggle" id="sp-advanced-toggle" aria-expanded="false" aria-controls="sp-advanced-panel">' +
-        '<span class="sp-advanced-toggle-label">⚙️ Advanced Options</span>' +
-        '<span class="sp-advanced-chevron" aria-hidden="true">▾</span>' +
-      '</button>' +
-      '<div class="sp-advanced-panel" id="sp-advanced-panel" hidden>' +
-        '<button id="sp-remove-watermark" class="sp-watermark-btn">Remove Watermark</button>' +
-        '<button id="sp-shield-btn" class="sp-shield-btn"><span id="sp-shield-label">Enable Shield</span></button>' +
-        '<button id="sp-native-chat-btn" class="sp-shield-btn sp-btn-feature sp-btn-native-chat"><span id="sp-native-chat-label">Use Native Chat</span></button>' +
-        '<button id="sp-download-project" class="sp-watermark-btn sp-btn-feature sp-btn-download">Download Source Code</button>' +
-        '<button id="sp-quick-init" class="sp-watermark-btn sp-btn-feature sp-btn-quick-init">Create New Project</button>' +
-        '<span class="sp-shortcuts-title sp-section-label">Powerkits Features</span>' +
-        '<button id="sp-publish-project" class="sp-watermark-btn sp-btn-feature sp-btn-publish">🌐 Publish Project</button>' +
-        '<button id="sp-enable-cloud" class="sp-watermark-btn sp-btn-feature sp-btn-cloud">☁️ Enable Lovable Cloud</button>' +
+      '<div class="sp-log ed-log" id="sp-log"></div>' +
+      // 02 · Shortcuts (stamps)
+      '<div class="ed-sec">' +
+        '<div class="ed-head"><span class="ed-num">02.</span><h2>Or borrow a <em>starting line</em></h2><span class="ed-rule"></span><span class="ed-note">tap one ↓</span></div>' +
+        '<div class="ed-stamps sp-shortcuts-grid" id="sp-chips"></div>' +
       '</div>' +
-      '<div id="sp-download-status" class="sp-log" style="display:none"></div>';
+      // 03 · Advanced (always visible, but keep id for legacy)
+      '<div class="ed-sec">' +
+        '<div class="ed-head"><span class="ed-num">03.</span><h2>The <em>back office</em></h2><span class="ed-rule"></span><span class="ed-note">for the tinkerers</span></div>' +
+        '<button type="button" class="sp-advanced-toggle ed-adv-toggle" id="sp-advanced-toggle" aria-expanded="true" aria-controls="sp-advanced-panel" style="display:none"></button>' +
+        '<div class="ed-rows sp-advanced-panel" id="sp-advanced-panel">' +
+          '<div class="ed-rw ed-a1"><div class="ed-badge">w</div><div class="ed-tx"><div class="ed-h">Remove the watermark</div><div class="ed-p">quietly strip the built-with badge</div></div>' +
+            '<button id="sp-remove-watermark" class="sp-watermark-btn ed-inline-btn">apply</button></div>' +
+          '<div class="ed-rw ed-a2"><div class="ed-badge">s</div><div class="ed-tx"><div class="ed-h">Enable Shield</div><div class="ed-p">keep your credits from disappearing</div></div>' +
+            '<button id="sp-shield-btn" class="sp-shield-btn ed-inline-btn"><span id="sp-shield-label">Enable</span></button></div>' +
+          '<div class="ed-rw ed-a2"><div class="ed-badge">n</div><div class="ed-tx"><div class="ed-h">Use Native Chat</div><div class="ed-p">route sends through lovable\'s own chat</div></div>' +
+            '<button id="sp-native-chat-btn" class="sp-shield-btn ed-inline-btn"><span id="sp-native-chat-label">Toggle</span></button></div>' +
+          '<div class="ed-rw ed-a3"><div class="ed-badge">d</div><div class="ed-tx"><div class="ed-h">Download the project</div><div class="ed-p">everything, zipped, in one breath</div></div>' +
+            '<button id="sp-download-project" class="sp-watermark-btn ed-inline-btn">download</button></div>' +
+          '<div class="ed-rw ed-a4"><div class="ed-badge">c</div><div class="ed-tx"><div class="ed-h">Start something new</div><div class="ed-p">a fresh page, blank on purpose</div></div>' +
+            '<button id="sp-quick-init" class="sp-watermark-btn ed-inline-btn">create</button></div>' +
+          '<div class="ed-rw ed-a5"><div class="ed-badge">p</div><div class="ed-tx"><div class="ed-h">Publish it</div><div class="ed-p">send your work into the world</div></div>' +
+            '<button id="sp-publish-project" class="sp-watermark-btn ed-inline-btn">publish</button></div>' +
+          '<div class="ed-rw ed-a3"><div class="ed-badge">☁</div><div class="ed-tx"><div class="ed-h">Enable Lovable Cloud</div><div class="ed-p">turn on the backend, no accounts to wire</div></div>' +
+            '<button id="sp-enable-cloud" class="sp-watermark-btn ed-inline-btn">enable</button></div>' +
+        '</div>' +
+      '</div>' +
+      '<div id="sp-download-status" class="sp-log ed-log" style="display:none"></div>';
 
     // Setup chips
     const chips = document.getElementById('sp-chips');
-    SP_TEMPLATES.forEach(t => {
-      const chip = document.createElement('button');
-      chip.className = 'sp-chip';
-      chip.innerHTML = t.icon + ' ' + t.label;
-      chip.title = t.prompt;
-      chip.addEventListener('click', () => { document.getElementById('sp-msg').value = t.prompt; });
-      chips.appendChild(chip);
+    // Editorial "postage stamp" shortcuts. Auto-paste prompt into #sp-msg.
+    const ED_STAMPS = [
+      { cls: 's-bug', glyph: 'B', name: 'Fix the bugs',   whisper: "find what's broken, mend it gently" },
+      { cls: 's-ref', glyph: 'R', name: 'Refactor',       whisper: 'same soul, cleaner bones' },
+      { cls: 's-err', glyph: 'E', name: 'Errors',         whisper: 'trace them, explain, resolve' },
+      { cls: 's-opt', glyph: 'O', name: 'Optimize',       whisper: 'lighter, faster, kinder to load' },
+      { cls: 's-cmt', glyph: 'C', name: 'Comments',       whisper: 'notes for future-you' },
+      { cls: 's-seo', glyph: 'S', name: 'SEO',            whisper: 'titles, meta, quiet keywords' },
+      { cls: 's-ui',  glyph: 'U', name: 'UI polish',      whisper: 'spacing, weight, small mercies' },
+      { cls: 's-cmp', glyph: 'C', name: 'Components',     whisper: 'reusable, named, shelved' },
+      { cls: 's-rev', glyph: 'R', name: 'Review',         whisper: 'a second pair of eyes' }
+    ];
+    // Map each stamp to its template prompt (falls back gracefully).
+    const stampPrompts = {
+      's-bug': SP_TEMPLATES[0].prompt, 's-ref': SP_TEMPLATES[1].prompt,
+      's-err': SP_TEMPLATES[2].prompt, 's-opt': SP_TEMPLATES[3].prompt,
+      's-cmt': SP_TEMPLATES[4].prompt, 's-seo': SP_TEMPLATES[5].prompt,
+      's-ui':  SP_TEMPLATES[6].prompt, 's-cmp': SP_TEMPLATES[7].prompt,
+      's-rev': SP_TEMPLATES[8].prompt,
+      's-hum': 'Humanize the UI: make it feel handmade — warmth, rhythm, honest microcopy, a little imperfection. Improve spacing, hierarchy, and copy to feel written by a person, not generated.'
+    };
+    ED_STAMPS.forEach(function (s) {
+      const btn = document.createElement('button');
+      btn.className = 'ed-stamp sp-chip ' + s.cls;
+      btn.title = stampPrompts[s.cls] || '';
+      btn.innerHTML = '<span class="ed-glyph">' + s.glyph + '</span>' +
+                      '<span class="ed-name">' + s.name + '</span>' +
+                      '<span class="ed-whisper">' + s.whisper + '</span>';
+      btn.addEventListener('click', function () {
+        const ta = document.getElementById('sp-msg');
+        if (!ta) return;
+        ta.value = stampPrompts[s.cls] || '';
+        ta.focus();
+      });
+      chips.appendChild(btn);
     });
+    // Wide "Humanize" stamp
+    const hum = document.createElement('button');
+    hum.className = 'ed-stamp ed-wide sp-chip s-hum';
+    hum.title = stampPrompts['s-hum'];
+    hum.innerHTML = '<span class="ed-glyph">H</span><span class="ed-copy"><span class="ed-name">Humanize the UI</span><span class="ed-whisper">make it feel handmade — warmth, rhythm, a little imperfection</span></span>';
+    hum.addEventListener('click', function () {
+      const ta = document.getElementById('sp-msg');
+      if (ta) { ta.value = stampPrompts['s-hum']; ta.focus(); }
+    });
+    chips.appendChild(hum);
 
     // Advanced Options collapse/expand (collapsed by default)
     const advToggle = document.getElementById('sp-advanced-toggle');
