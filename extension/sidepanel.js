@@ -783,6 +783,59 @@
   function showMainUIContent() {
     var container = document.getElementById('sp-tab-content');
     if (!container) return;
+    // Project gate: extension only works when a Lovable project URL is open.
+    findLovableProjectTab(function(tab){
+      var pid = projectIdFromTabUrl(tab && tab.url);
+      if (!pid) {
+        renderProjectGate(container);
+      } else {
+        renderEditorialUI(container);
+      }
+    });
+    // Re-render when tabs change so the gate goes away as soon as a project opens.
+    if (!window.__pkTabWatcherBound) {
+      window.__pkTabWatcherBound = true;
+      var rerender = function(){
+        if (spActiveTab === 'prompt') {
+          var c = document.getElementById('sp-tab-content');
+          if (c) findLovableProjectTab(function(t){
+            var p = projectIdFromTabUrl(t && t.url);
+            var gateShown = !!c.querySelector('.sp-project-gate');
+            var uiShown = !!c.querySelector('#sp-msg');
+            if (p && gateShown) renderEditorialUI(c);
+            else if (!p && uiShown) renderProjectGate(c);
+            updateSync();
+          });
+        }
+      };
+      try {
+        chrome.tabs.onActivated.addListener(rerender);
+        chrome.tabs.onUpdated.addListener(function(_id, info){ if (info.url || info.status === 'complete') rerender(); });
+        chrome.tabs.onRemoved.addListener(rerender);
+      } catch(e){}
+    }
+  }
+
+  function renderProjectGate(container){
+    container.innerHTML =
+      '<div class="sp-project-gate ed-sec">' +
+        '<div class="ed-head"><span class="ed-num">•</span><h2>Open a <em>Lovable project</em> to begin</h2><span class="ed-rule"></span></div>' +
+        '<div class="ed-card" style="text-align:center;padding:22px 16px">' +
+          '<div style="font-size:38px;line-height:1;margin-bottom:8px">🧭</div>' +
+          '<div style="font-family:var(--ed-serif);font-size:16px;color:var(--ed-ink);margin-bottom:6px">Please open a Lovable project</div>' +
+          '<div style="font-size:12px;color:var(--ed-muted);margin-bottom:14px">Unlimitly syncs with the project URL, e.g. <code>lovable.dev/projects/…</code></div>' +
+          '<button id="sp-gate-new-project" class="ed-inline-btn" style="font-size:13px !important;padding:8px 16px !important">Don\'t have any project? Click here →</button>' +
+          '<div style="font-size:10.5px;color:var(--ed-muted);margin-top:10px;font-style:italic">tip: type <b>hello</b> as your first message — only 0.5 credits, then everything else is unlimited</div>' +
+        '</div>' +
+      '</div>';
+    var btn = document.getElementById('sp-gate-new-project');
+    if (btn) btn.addEventListener('click', function(){
+      try { chrome.tabs.create({ url: 'https://lovable.dev/' }); } catch(e){}
+      spAlert('One small step', 'On Lovable, type “hello” in the chat and send it. That single manual message (~0.5 credits) creates your project — after that Unlimitly handles the rest.');
+    });
+  }
+
+  function renderEditorialUI(container) {
     // Editorial layout — preserves every ID the existing handlers bind to.
     container.innerHTML =
       '<div class="ed-runhead"><span class="ed-pin"></span><span>Connected · lovable.dev</span><span class="ed-grow"></span><span class="ed-credit">unlimited today</span></div>' +
@@ -793,13 +846,7 @@
           '<textarea class="sp-textarea ed-textarea" id="sp-msg" rows="3" placeholder="a landing page for my dad\'s bakery, warm and honest…" spellcheck="false"></textarea>' +
           '<div id="sp-attach-preview" class="sp-attach-preview" style="display:none"></div>' +
           '<div class="ed-pfoot">' +
-            '<div class="ed-left-tools">' +
-              '<label class="sp-toggle" title="Plan mode"><input type="checkbox" id="sp-modo-plano"><span class="sp-toggle-slider"></span></label>' +
-              '<span class="ed-hint">plan</span>' +
-              '<button class="ed-mini" id="sp-attach-btn" title="Attach file">📎</button>' +
-              '<button class="ed-mini" id="sp-optimize" title="Optimize with AI">' + SP_SVG.sparkles + '</button>' +
-              '<button class="ed-mini" id="sp-speech" title="Voice">' + SP_SVG.mic + '</button>' +
-            '</div>' +
+            '<div class="ed-left-tools"><span class="ed-hint">write it plain — send it clean</span></div>' +
             '<button class="ed-send sp-send-btn" id="sp-send">Send it →</button>' +
           '</div>' +
         '</div>' +
@@ -811,25 +858,18 @@
         '<div class="ed-head"><span class="ed-num">02.</span><h2>Or borrow a <em>starting line</em></h2><span class="ed-rule"></span><span class="ed-note">tap one ↓</span></div>' +
         '<div class="ed-stamps sp-shortcuts-grid" id="sp-chips"></div>' +
       '</div>' +
-      // 03 · Advanced (always visible, but keep id for legacy)
+      // 03 · Advanced — stable action bar
       '<div class="ed-sec">' +
-        '<div class="ed-head"><span class="ed-num">03.</span><h2>The <em>back office</em></h2><span class="ed-rule"></span><span class="ed-note">for the tinkerers</span></div>' +
+        '<div class="ed-head"><span class="ed-num">03.</span><h2>The <em>toolbar</em></h2><span class="ed-rule"></span><span class="ed-note">one tap each</span></div>' +
         '<button type="button" class="sp-advanced-toggle ed-adv-toggle" id="sp-advanced-toggle" aria-expanded="true" aria-controls="sp-advanced-panel" style="display:none"></button>' +
-        '<div class="ed-rows sp-advanced-panel" id="sp-advanced-panel">' +
-          '<div class="ed-rw ed-a1"><div class="ed-badge">w</div><div class="ed-tx"><div class="ed-h">Remove the watermark</div><div class="ed-p">quietly strip the built-with badge</div></div>' +
-            '<button id="sp-remove-watermark" class="sp-watermark-btn ed-inline-btn">apply</button></div>' +
-          '<div class="ed-rw ed-a2"><div class="ed-badge">s</div><div class="ed-tx"><div class="ed-h">Enable Shield</div><div class="ed-p">keep your credits from disappearing</div></div>' +
-            '<button id="sp-shield-btn" class="sp-shield-btn ed-inline-btn"><span id="sp-shield-label">Enable</span></button></div>' +
-          '<div class="ed-rw ed-a2"><div class="ed-badge">n</div><div class="ed-tx"><div class="ed-h">Use Native Chat</div><div class="ed-p">route sends through lovable\'s own chat</div></div>' +
-            '<button id="sp-native-chat-btn" class="sp-shield-btn ed-inline-btn"><span id="sp-native-chat-label">Toggle</span></button></div>' +
-          '<div class="ed-rw ed-a3"><div class="ed-badge">d</div><div class="ed-tx"><div class="ed-h">Download the project</div><div class="ed-p">everything, zipped, in one breath</div></div>' +
-            '<button id="sp-download-project" class="sp-watermark-btn ed-inline-btn">download</button></div>' +
-          '<div class="ed-rw ed-a4"><div class="ed-badge">c</div><div class="ed-tx"><div class="ed-h">Start something new</div><div class="ed-p">a fresh page, blank on purpose</div></div>' +
-            '<button id="sp-quick-init" class="sp-watermark-btn ed-inline-btn">create</button></div>' +
-          '<div class="ed-rw ed-a5"><div class="ed-badge">p</div><div class="ed-tx"><div class="ed-h">Publish it</div><div class="ed-p">send your work into the world</div></div>' +
-            '<button id="sp-publish-project" class="sp-watermark-btn ed-inline-btn">publish</button></div>' +
-          '<div class="ed-rw ed-a3"><div class="ed-badge">☁</div><div class="ed-tx"><div class="ed-h">Enable Lovable Cloud</div><div class="ed-p">turn on the backend, no accounts to wire</div></div>' +
-            '<button id="sp-enable-cloud" class="sp-watermark-btn ed-inline-btn">enable</button></div>' +
+        '<div class="ed-actionbar sp-advanced-panel" id="sp-advanced-panel">' +
+          '<button id="sp-remove-watermark" class="ed-act ed-act-w" title="Remove watermark"><span class="ed-act-g">W</span><span class="ed-act-l">Watermark</span></button>' +
+          '<button id="sp-shield-btn" class="ed-act ed-act-s" title="Toggle Shield"><span class="ed-act-g">S</span><span class="ed-act-l"><span id="sp-shield-label">Shield</span></span></button>' +
+          '<button id="sp-native-chat-btn" class="ed-act ed-act-n" title="Native Chat"><span class="ed-act-g">N</span><span class="ed-act-l"><span id="sp-native-chat-label">Native</span></span></button>' +
+          '<button id="sp-download-project" class="ed-act ed-act-d" title="Download project"><span class="ed-act-g">D</span><span class="ed-act-l">Download</span></button>' +
+          '<button id="sp-quick-init" class="ed-act ed-act-c" title="Create new project"><span class="ed-act-g">C</span><span class="ed-act-l">Create</span></button>' +
+          '<button id="sp-publish-project" class="ed-act ed-act-p" title="Publish"><span class="ed-act-g">P</span><span class="ed-act-l">Publish</span></button>' +
+          '<button id="sp-enable-cloud" class="ed-act ed-act-cl" title="Enable Cloud"><span class="ed-act-g">☁</span><span class="ed-act-l">Cloud</span></button>' +
         '</div>' +
       '</div>' +
       '<div id="sp-download-status" class="sp-log ed-log" style="display:none"></div>';
@@ -872,11 +912,18 @@
       });
       chips.appendChild(btn);
     });
-    // Wide "Humanize" stamp
+    // Feature "Humanize" stamp — hero card with its own personality
     const hum = document.createElement('button');
-    hum.className = 'ed-stamp ed-wide sp-chip s-hum';
+    hum.className = 'ed-stamp ed-wide ed-humanize sp-chip s-hum';
     hum.title = stampPrompts['s-hum'];
-    hum.innerHTML = '<span class="ed-glyph">H</span><span class="ed-copy"><span class="ed-name">Humanize the UI</span><span class="ed-whisper">make it feel handmade — warmth, rhythm, a little imperfection</span></span>';
+    hum.innerHTML =
+      '<span class="ed-glyph ed-hum-glyph">H</span>' +
+      '<span class="ed-copy">' +
+        '<span class="ed-hum-eyebrow">✦ signature move</span>' +
+        '<span class="ed-name ed-hum-name">Humanize the UI</span>' +
+        '<span class="ed-whisper ed-hum-whisper">warmth, rhythm, honest microcopy — a little imperfection where it matters</span>' +
+      '</span>' +
+      '<span class="ed-hum-arrow">→</span>';
     hum.addEventListener('click', function () {
       const ta = document.getElementById('sp-msg');
       if (ta) { ta.value = stampPrompts['s-hum']; ta.focus(); }
@@ -901,27 +948,12 @@
       });
     }
 
-    // Plan Mode (workflow only — sends use native Lovable chat, not relay)
-    migratePlanModeStorageKeys(function(on) {
-      var toggle = document.getElementById("sp-modo-plano");
-      if (toggle) toggle.checked = on;
-    });
-    document.getElementById("sp-modo-plano").addEventListener("change", function() {
-      const checkbox = this;
-      writePlanModeToStorage(checkbox.checked);
-      if (checkbox.checked) showModoPlanoAlert();
-    });
-
-    // File attachment
-    setupSpFileAttachment();
-
-    // Clipboard paste (Ctrl+V) for images
+    // Clipboard paste (Ctrl+V) for images — still useful even without attach button
     setupSpClipboardPaste();
 
-    // Event listeners
-    document.getElementById('sp-send').addEventListener('click', handleSend);
-    document.getElementById('sp-optimize').addEventListener('click', handleOptimize);
-    setupSpSpeech();
+    // Event listeners (guarded — plan/attach/optimize/voice buttons removed)
+    var sendBtn = document.getElementById('sp-send');
+    if (sendBtn) sendBtn.addEventListener('click', handleSend);
     setupSpWatermarkButton();
     setupSpShield();
     setupSpNativeChat();
