@@ -1,4 +1,4 @@
-// Saqlain\'s Tech World - Sound System v1.0
+// Unlimitly by Proflow Tools - Sound System v1.0
 // Plays categorized audio cues for success/error events.
 (function(global){
   var _ctx = null;

@@ -1,5 +1,5 @@
 // ============================================
-// Saqlain\'s Tech World – HTML Templates (content)
+// Unlimitly by Proflow Tools – HTML Templates (content)
 // Separated from business logic (content.js)
 // ============================================
 
@@ -24,9 +24,9 @@ const SVG_ICONS = {
 
 var QL_DISCORD_SUPPORT = (typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL)
   ? DISCORD_SUPPORT_URL
-  : "https://www.youtube.com/@saqlainstechworld";
+  : "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y";
 var QL_WHATSAPP_CHANNEL = "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y";
-var QL_YOUTUBE_CHANNEL = "https://www.youtube.com/@saqlainstechworld";
+var QL_YOUTUBE_CHANNEL = "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y";
 
 const PROMPT_TEMPLATES = [
   { icon: SVG_ICONS.wrench, label: "Bugs", prompt: "Analyze the code and identify all bugs, errors, and failures. Fix each one and explain the problem and the solution applied." },
@@ -45,7 +45,7 @@ function templateChannelGate(minimized) {
   return '<div id="ql-header">' +
     '<div class="ql-header-left">' +
       '<span class="ql-dot"></span>' +
-      '<img class="ql-title-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-title ql-title-stack"><span>Saqlain\'s Tech World</span><small>lovable</small></span>' +
+      '<img class="ql-title-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-title ql-title-stack"><span>Unlimitly by Proflow Tools</span><small>lovable</small></span>' +
     '</div>' +
     '<div class="ql-header-right">' +
        '<span class="ql-badge">v' + extensionVersionShort() + '</span>' +
@@ -70,7 +70,7 @@ function templateLicenseGate(minimized) {
   return '<div id="ql-header">' +
     '<div class="ql-header-left">' +
       '<span class="ql-dot"></span>' +
-      '<img class="ql-title-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-title ql-title-stack"><span>Saqlain\'s Tech World</span><small>lovable</small></span>' +
+      '<img class="ql-title-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-title ql-title-stack"><span>Unlimitly by Proflow Tools</span><small>lovable</small></span>' +
     '</div>' +
     '<div class="ql-header-right">' +
        '<span class="ql-badge">v' + extensionVersionShort() + '</span>' +
@@ -98,7 +98,7 @@ function templateLicenseGate(minimized) {
 function templateMainUI(greeting, statusBadge, minimized) {
   return '<div id="ql-header">' +
     '<div class="ql-header-left">' +
-      '<span class="ql-brand"><img class="ql-brand-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-brand-copy"><span class="ql-brand-name">Saqlain\'s Tech World</span><span class="ql-brand-subtitle">lovable</span></span></span>' +
+      '<span class="ql-brand"><img class="ql-brand-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-brand-copy"><span class="ql-brand-name">Unlimitly by Proflow Tools</span><span class="ql-brand-subtitle">lovable</span></span></span>' +
     '</div>' +
     '<div class="ql-header-right">' +
       '<button class="ql-icon-btn ql-notif-btn" title="Notifications">' + SVG_ICONS.bell + '<span class="ql-notif-badge" style="display:none">0</span></button>' +
@@ -176,7 +176,7 @@ function templateMainUI(greeting, statusBadge, minimized) {
       '<a href="' + QL_DISCORD_SUPPORT + '" target="_blank" class="ql-support-link">' + SVG_ICONS.headphones + ' Support</a>' +
        '<span class="ql-footer-version">v' + extensionVersionShort() + '</span>' +
     '</div>' +
-    '<span class="ql-badge-mz">Saqlain\'s Tech World</span>' +
+    '<span class="ql-badge-mz">Unlimitly by Proflow Tools</span>' +
   '</div>' +
   '<div id="ql-resize-handle" class="ql-resize-handle"></div>' +
   '<!-- Notifications Panel -->' +
@@ -227,10 +227,10 @@ function qlTemplateUpdateBanner(version, changelog, dlUrl) {
 function templateWhatsAppPopup() {
   return `
     <div id="ql-whatsapp-overlay" class="ql-overlay ql-community-overlay">
-      <div class="ql-community-modal" role="dialog" aria-modal="true" aria-label="Join Saqlain's Tech World channels">
+      <div class="ql-community-modal" role="dialog" aria-modal="true" aria-label="Join Unlimitly by Proflow Tools channels">
         <button id="ql-wa-close" class="ql-community-close" type="button" aria-label="Close">&times;</button>
         <div class="ql-community-logo">🚀</div>
-        <h2 class="ql-community-title">Join Saqlain's Tech World</h2>
+        <h2 class="ql-community-title">Join Unlimitly by Proflow Tools</h2>
         <div class="ql-community-subtitle">lovable</div>
         <p class="ql-community-text">Join our WhatsApp and YouTube channels for updates, tips, support, and new feature announcements.</p>
         <div class="ql-community-actions">
@@ -279,7 +279,7 @@ function templateBrlSection() {
 function templatePaymentUI(minimized) {
   return '<div id="ql-header">' +
     '<div class="ql-header-left">' +
-      '<span class="ql-brand"><img class="ql-brand-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-brand-copy"><span class="ql-brand-name">Saqlain\'s Tech World</span><span class="ql-brand-subtitle">lovable</span></span></span>' +
+      '<span class="ql-brand"><img class="ql-brand-logo" src="' + chrome.runtime.getURL('assets/logo-master-lovable-square.png') + '" alt=""><span class="ql-brand-copy"><span class="ql-brand-name">Unlimitly by Proflow Tools</span><span class="ql-brand-subtitle">lovable</span></span></span>' +
     '</div>' +
     '<div class="ql-header-right">' +
       '<button id="ql-pay-back" class="ql-icon-btn" title="Back">←</button>' +

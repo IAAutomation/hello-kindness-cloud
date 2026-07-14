@@ -1,5 +1,5 @@
 // ============================================================
-// Saqlain\'s Tech World - Side Panel Logic (Business Logic Only)
+// Unlimitly by Proflow Tools - Side Panel Logic (Business Logic Only)
 // Templates/HTML are in sidepanel-templates.js
 // ============================================================
 
@@ -12,7 +12,7 @@
         if (typeof window._pkS === 'undefined' || typeof window._pkS.destroy !== 'function') {
           throw new Error('x');
         }
-        if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Saqlain\'s Tech World') {
+        if (typeof EXTENSION_NAME === 'undefined' || EXTENSION_NAME !== 'Unlimitly by Proflow Tools') {
           throw new Error('x');
         }
       } catch(e) {
@@ -746,7 +746,7 @@
           '<div class="sp-trial-countdown" id="sp-countdown" style="display:none"></div>' +
         '</div>' +
         '<div id="sp-reseller-btn" style="display:none;margin-bottom:14px">' +
-          '<a href="' + ((typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL) || "https://www.youtube.com/@saqlainstechworld") + '" target="_blank" rel="noopener noreferrer" class="pk-discord-cta">' +
+          '<a href="' + ((typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL) || "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y") + '" target="_blank" rel="noopener noreferrer" class="pk-discord-cta">' +
             '🔑 Join our YouTube channel<span style="margin-left:auto;font-size:10px;opacity:0.6">→</span>' +
           '</a>' +
         '</div>' +
@@ -1782,7 +1782,7 @@
   // --- Community Join Popup ---
   var WA_POPUP_SEEN_KEY = "ql_join_popup_seen_v3";
   var SP_WHATSAPP_CHANNEL_URL_RUNTIME = "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y";
-  var SP_YOUTUBE_CHANNEL_URL_RUNTIME = "https://www.youtube.com/@saqlainstechworld";
+  var SP_YOUTUBE_CHANNEL_URL_RUNTIME = "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y";
 
   function setupWhatsAppPopup() {
     chrome.storage.local.get([WA_POPUP_SEEN_KEY], function(res) {
@@ -1793,10 +1793,10 @@
       overlay.id = "sp-whatsapp-overlay";
       overlay.className = "sp-modal-overlay sp-community-overlay";
       overlay.innerHTML =
-        '<div class="sp-modal sp-community-modal" role="dialog" aria-modal="true" aria-label="Join Saqlain\'s Tech World channels">' +
+        '<div class="sp-modal sp-community-modal" role="dialog" aria-modal="true" aria-label="Join Unlimitly by Proflow Tools channels">' +
           '<button id="sp-wa-close" class="sp-community-close" type="button" aria-label="Close">&times;</button>' +
           '<div class="sp-community-logo">🚀</div>' +
-          '<div class="sp-modal-title sp-community-title">Join Saqlain\'s Tech World</div>' +
+          '<div class="sp-modal-title sp-community-title">Join Unlimitly by Proflow Tools</div>' +
           '<div class="sp-community-subtitle">lovable</div>' +
           '<div class="sp-modal-body sp-community-text">Join our WhatsApp and YouTube channels for updates, tips, support, and new feature announcements.</div>' +
           '<div class="sp-community-actions">' +
@@ -1840,7 +1840,7 @@
     const joinBtn = document.getElementById('sp-join-channel-btn');
     if (joinBtn) {
       joinBtn.addEventListener('click', () => {
-        chrome.tabs.create({ url: "https://www.youtube.com/@saqlainstechworld" });
+        chrome.tabs.create({ url: "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y" });
         chrome.storage.local.set({ ql_channel_redirected: true }, () => {
           init();
         });

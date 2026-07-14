@@ -1,9 +1,9 @@
 /**
- * Saqlain\'s Tech World - User-facing copy: English translations + strip internal/hosting/vendor branding.
+ * Unlimitly by Proflow Tools - User-facing copy: English translations + strip internal/hosting/vendor branding.
  */
 function stripInternalBranding(value) {
   if (value == null) return value;
-  var brand = typeof EXTENSION_NAME !== "undefined" ? String(EXTENSION_NAME) : "Saqlain\'s Tech World";
+  var brand = typeof EXTENSION_NAME !== "undefined" ? String(EXTENSION_NAME) : "Unlimitly by Proflow Tools";
   var s = String(value);
 
   var rules = [

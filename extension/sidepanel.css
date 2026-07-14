@@ -470,7 +470,7 @@ body.sp-light .sp-chip:hover {
 
 
 
-/* ===== Saqlain layout polish: brand subtitle, community popup, high-contrast buttons ===== */
+/* ===== Unlimitly layout polish: brand subtitle, community popup, high-contrast buttons ===== */
 .sp-brand-copy { display:flex; flex-direction:column; line-height:1.05; min-width:0; }
 .sp-brand-subtitle { margin-top:3px; font-size:9px; font-weight:800; letter-spacing:0.18em; text-transform:uppercase; color:var(--ql-text-secondary); opacity:0.95; }
 .sp-community-overlay { z-index:2147483647; }
