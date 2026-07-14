@@ -212,7 +212,7 @@ function Landing() {
         className="pointer-events-none absolute inset-0 -z-20"
         style={{
           background:
-            "radial-gradient(900px 700px at 8% 0%, oklch(0.92 0.03 85 / 0.9), transparent 60%), radial-gradient(900px 700px at 100% 10%, oklch(0.88 0.04 230 / 0.85), transparent 60%), radial-gradient(1000px 800px at 50% 55%, oklch(0.9 0.05 160 / 0.7), transparent 60%), radial-gradient(800px 700px at 15% 100%, oklch(0.92 0.04 95 / 0.75), transparent 60%), radial-gradient(700px 600px at 95% 95%, oklch(0.88 0.04 200 / 0.7), transparent 60%), linear-gradient(180deg, oklch(0.97 0.015 90), oklch(0.95 0.02 200))",
+            "radial-gradient(900px 700px at 8% 0%, #F5D0D7cc, transparent 60%), radial-gradient(900px 700px at 100% 10%, #B7D7E8cc, transparent 60%), radial-gradient(1000px 800px at 50% 55%, #D8EAD7b3, transparent 60%), radial-gradient(800px 700px at 15% 100%, #FFDCC2bf, transparent 60%), radial-gradient(700px 600px at 95% 95%, #FFF1E3cc, transparent 60%), linear-gradient(180deg, #FFF5F7, #F8FBFF)",
         }}
       />
       {/* animated floating blobs */}
