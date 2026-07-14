@@ -9,12 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResellersOgRouteImport } from './routes/resellers-og'
 import { Route as ExtensionRouteImport } from './routes/extension'
+import { Route as AdminOgRouteImport } from './routes/admin-og'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ResellersOgRoute = ResellersOgRouteImport.update({
+  id: '/resellers-og',
+  path: '/resellers-og',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExtensionRoute = ExtensionRouteImport.update({
   id: '/extension',
   path: '/extension',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminOgRoute = AdminOgRouteImport.update({
+  id: '/admin-og',
+  path: '/admin-og',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,37 +37,59 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-og': typeof AdminOgRoute
   '/extension': typeof ExtensionRoute
+  '/resellers-og': typeof ResellersOgRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-og': typeof AdminOgRoute
   '/extension': typeof ExtensionRoute
+  '/resellers-og': typeof ResellersOgRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-og': typeof AdminOgRoute
   '/extension': typeof ExtensionRoute
+  '/resellers-og': typeof ResellersOgRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/extension'
+  fullPaths: '/' | '/admin-og' | '/extension' | '/resellers-og'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/extension'
-  id: '__root__' | '/' | '/extension'
+  to: '/' | '/admin-og' | '/extension' | '/resellers-og'
+  id: '__root__' | '/' | '/admin-og' | '/extension' | '/resellers-og'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminOgRoute: typeof AdminOgRoute
   ExtensionRoute: typeof ExtensionRoute
+  ResellersOgRoute: typeof ResellersOgRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/resellers-og': {
+      id: '/resellers-og'
+      path: '/resellers-og'
+      fullPath: '/resellers-og'
+      preLoaderRoute: typeof ResellersOgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/extension': {
       id: '/extension'
       path: '/extension'
       fullPath: '/extension'
       preLoaderRoute: typeof ExtensionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-og': {
+      id: '/admin-og'
+      path: '/admin-og'
+      fullPath: '/admin-og'
+      preLoaderRoute: typeof AdminOgRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,7 +104,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminOgRoute: AdminOgRoute,
   ExtensionRoute: ExtensionRoute,
+  ResellersOgRoute: ResellersOgRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
