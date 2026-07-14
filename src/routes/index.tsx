@@ -575,7 +575,7 @@ function Landing() {
             <div className="relative overflow-hidden rounded-[2.5rem] border border-cream/60 p-1 shadow-[0_40px_80px_-30px_oklch(0.28_0.05_240/0.4)]"
               style={{
                 background:
-                  "conic-gradient(from 140deg, oklch(0.42 0.06 220), oklch(0.55 0.06 200), oklch(0.7 0.05 160), oklch(0.85 0.03 95), oklch(0.42 0.06 220))",
+                  "conic-gradient(from 140deg, #FF61D6, #B7D7E8, #D8EAD7, #FFDCC2, #FF61D6)",
               }}
             >
               <div className="glass relative rounded-[calc(2.5rem-4px)] p-10 md:p-12">
