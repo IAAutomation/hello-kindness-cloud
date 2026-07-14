@@ -5,6 +5,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Hide Lovable badge (injected on published deployments) — parent container,
+   text, and floating close X. */
+#lovable-badge,
+#lovable-badge *,
+[id^="lovable-badge"],
+[class*="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
 /*
  * Design system definition.
  *
