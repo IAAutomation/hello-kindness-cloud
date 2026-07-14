@@ -512,12 +512,14 @@
   var backToPopup = document.getElementById('sp-back-to-popup');
   if (backToPopup) backToPopup.style.display = 'none';
 
-  document.querySelector('.sp-theme-btn').addEventListener('click', () => {
+  const themeBtn = document.querySelector('.sp-theme-btn');
+  if (themeBtn) themeBtn.addEventListener('click', () => {
     const isLight = document.body.classList.toggle('sp-light');
     chrome.storage.local.set({ ql_dark_mode: !isLight });
   });
 
-  document.querySelector('.sp-logout-btn').addEventListener('click', () => {
+  const logoutBtn = document.querySelector('.sp-logout-btn');
+  if (logoutBtn) logoutBtn.addEventListener('click', () => {
     if(heartbeatInterval) clearInterval(heartbeatInterval);
     if (!INTERNAL_LICENSE_MODE) syncCreditBypassOnLovableTabs(false);
     chrome.storage.local.remove(["ql_license_valid","ql_license_key","ql_session_id","ql_user_name","ql_expires_at","ql_activated_at","ql_license_status"], async () => {
