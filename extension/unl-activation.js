@@ -7,7 +7,11 @@
 (function () {
   const SUPABASE_URL = 'https://sqkvakhzgsgqvfayefwm.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_UtFsx1XfkWAIauj4kXssaw_5h45Em0D';
-  const WHATSAPP_CONTACT_URL = 'https://wa.me/message/proflowtools';
+  const WHATSAPP_CONTACT_URL =
+    'https://wa.me/923165852898?text=' +
+    encodeURIComponent(
+      "Hi Ihtisham 👋\n\nI'd like an activation key for the Unlimitly extension (Lovable unlimited access). Please share the details and pricing.\n\nThanks!"
+    );
   const STORAGE_KEYS = {
     activated: 'unl_activated',
     key: 'unl_key',
