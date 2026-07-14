@@ -151,18 +151,18 @@
 }
 
 @theme {
-  /* Repainted palette: sage · slate · warm beige. Token names kept for
-     backwards compatibility with existing utility classes. */
-  --color-apricot: oklch(0.92 0.03 85);   /* warm sand */
-  --color-coral: oklch(0.42 0.06 220);    /* deep slate blue (primary accent) */
-  --color-lavender: oklch(0.82 0.04 240); /* dusty slate blue */
-  --color-mint: oklch(0.86 0.05 155);     /* soft sage */
-  --color-butter: oklch(0.94 0.04 95);    /* pale cream */
-  --color-rose: oklch(0.78 0.05 155);     /* muted sage green */
-  --color-sky: oklch(0.86 0.04 230);      /* pale slate */
-  --color-cream: oklch(0.97 0.015 90);    /* creamy beige */
-  --color-espresso: oklch(0.28 0.03 240); /* deep slate ink */
-  --color-ink: oklch(0.30 0.03 240);
+  /* Fresh pastel palette — soft rose, sky, sage, peach & cream.
+     Token names preserved for backwards compatibility. */
+  --color-cream: #FFF5F7;      /* soft rose-white base */
+  --color-rose: #F5D0D7;       /* powder rose */
+  --color-sky: #B7D7E8;        /* dusty sky blue */
+  --color-lavender: #F8FBFF;   /* near-white lavender mist */
+  --color-coral: #FF61D6;      /* vivid pink accent */
+  --color-mint: #D8EAD7;       /* soft sage */
+  --color-apricot: #FFDCC2;    /* warm peach */
+  --color-butter: #FFF1E3;     /* creamy butter */
+  --color-espresso: #2A2540;   /* deep ink for text contrast */
+  --color-ink: #2A2540;
 }
 
 @utility btn-glow {
@@ -220,7 +220,7 @@
 }
 
 @utility text-gradient {
-  background: linear-gradient(120deg, oklch(0.42 0.06 220), oklch(0.52 0.07 200), oklch(0.48 0.06 160));
+  background: linear-gradient(120deg, #FF61D6, #B7D7E8, #FFDCC2);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
