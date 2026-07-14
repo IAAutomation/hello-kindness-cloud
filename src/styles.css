@@ -1,6 +1,6 @@
 @import "tailwindcss" source(none);
 @source "../src";
-@source inline("bg-coral bg-apricot bg-lavender bg-mint bg-butter bg-rose bg-sky bg-cream border-coral border-apricot border-lavender border-mint border-butter border-rose border-sky border-cream text-coral text-apricot text-lavender text-mint text-butter text-rose text-sky text-cream fill-coral fill-apricot fill-lavender fill-mint fill-butter fill-rose fill-sky fill-cream");
+@source inline("bg-coral bg-apricot bg-lavender bg-mint bg-butter bg-rose bg-sky bg-cream bg-gold bg-gold-light bg-espresso bg-ink border-coral border-apricot border-lavender border-mint border-butter border-rose border-sky border-cream border-gold border-gold-light border-espresso text-coral text-apricot text-lavender text-mint text-butter text-rose text-sky text-cream text-gold text-gold-light text-espresso text-muted-ink fill-coral fill-apricot fill-lavender fill-mint fill-butter fill-rose fill-sky fill-cream fill-gold fill-gold-light stroke-gold stroke-gold-light stroke-espresso");
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
