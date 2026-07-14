@@ -720,7 +720,7 @@ function showMainUI(box){
     setupSpeech();
     setupNotifications();
     setupModoPlano();
-    setupWhatsAppPopup();
+    // setupWhatsAppPopup();  // disabled — no channel popups
     setupFileAttachment();
     setupShield();
     setupTabs();

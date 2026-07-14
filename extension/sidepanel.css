@@ -604,3 +604,224 @@ body.sp-light .sp-chip:hover {
 /* ===== Project gate ===== */
 .sp-project-gate .ed-card{border:1px dashed var(--ed-gold);background:#FFFCF3}
 .sp-project-gate code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;background:rgba(196,120,60,.08);padding:1px 5px;border-radius:3px;color:var(--ed-clay)}
+
+/* ============================================================
+   Unlimitly Activation Gate — humanized, editorial motion
+   ============================================================ */
+.unl-gate {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 22px 40px;
+}
+.unl-gate-inner {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Welcome word stack — stagger, no bounce */
+.unl-word-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: baseline;
+  line-height: 1.05;
+  font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+  font-size: 44px;
+  letter-spacing: -0.02em;
+  color: var(--ql-text-primary);
+}
+.unl-word {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(4px);
+  animation: unl-word-in 900ms cubic-bezier(.22,.61,.36,1) forwards;
+  display: inline-block;
+}
+.unl-word.unl-w1 { animation-delay: 120ms; }
+.unl-word.unl-w2 { animation-delay: 340ms; font-style: italic; color: var(--ql-text-muted); font-size: 34px; }
+.unl-word.unl-w3 { animation-delay: 520ms; }
+
+@keyframes unl-word-in {
+  0%   { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.unl-tagline {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ql-text-muted);
+}
+.unl-line {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: unl-line-in 700ms cubic-bezier(.22,.61,.36,1) forwards;
+}
+.unl-line.unl-l1 { animation-delay: 760ms; }
+.unl-line.unl-l2 { animation-delay: 940ms; }
+@keyframes unl-line-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Key input block */
+.unl-key-block {
+  margin-top: 6px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: unl-line-in 700ms cubic-bezier(.22,.61,.36,1) 1120ms forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.unl-key-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ql-text-muted);
+}
+.unl-key-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--ql-border);
+  background: var(--ql-surface);
+  color: var(--ql-text-primary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  outline: none;
+  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.unl-key-input::placeholder { color: var(--ql-text-muted); opacity: 0.55; }
+.unl-key-input:focus {
+  border-color: var(--ql-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ql-accent) 18%, transparent);
+}
+.unl-activate-btn {
+  position: relative;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: var(--ql-text-primary);
+  color: var(--ql-bg);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform .18s ease, opacity .18s ease, background .18s ease;
+}
+.unl-activate-btn:hover { transform: translateY(-1px); }
+.unl-activate-btn:active { transform: translateY(0); }
+.unl-activate-btn:disabled { cursor: default; opacity: 0.75; transform: none; }
+.unl-btn-spinner {
+  display: none;
+  width: 14px; height: 14px;
+  border: 2px solid color-mix(in oklab, var(--ql-bg) 40%, transparent);
+  border-top-color: var(--ql-bg);
+  border-radius: 50%;
+  margin-left: 10px;
+  vertical-align: -3px;
+  animation: unl-spin 700ms linear infinite;
+}
+.unl-activate-btn.is-loading .unl-btn-spinner { display: inline-block; }
+.unl-activate-btn.is-loading .unl-btn-label { opacity: 0.8; }
+@keyframes unl-spin { to { transform: rotate(360deg); } }
+
+.unl-key-msg {
+  min-height: 18px;
+  font-size: 12px;
+  color: var(--ql-text-muted);
+  transition: color .2s ease;
+}
+.unl-key-msg.is-err { color: #b3261e; }
+.unl-key-msg.is-info { color: var(--ql-text-muted); }
+.unl-key-msg.is-ok { color: #0f7b45; }
+
+.unl-shake {
+  animation: unl-shake 380ms cubic-bezier(.36,.07,.19,.97);
+}
+@keyframes unl-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+/* Help / WhatsApp contact */
+.unl-help {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  opacity: 0;
+  animation: unl-line-in 700ms cubic-bezier(.22,.61,.36,1) 1340ms forwards;
+}
+.unl-help-text {
+  font-size: 12px;
+  color: var(--ql-text-muted);
+}
+.unl-help-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ql-text-primary);
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border: 1px solid var(--ql-border);
+  border-radius: 8px;
+  transition: border-color .2s ease, background .2s ease;
+}
+.unl-help-link:hover {
+  border-color: var(--ql-text-primary);
+  background: color-mix(in oklab, var(--ql-text-primary) 5%, transparent);
+}
+
+/* Verified state */
+.unl-gate-verified .unl-verified-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: unl-line-in 500ms ease forwards;
+}
+.unl-check-circle {
+  stroke: #0f7b45;
+  stroke-width: 2;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: unl-check-circle 700ms cubic-bezier(.65,0,.45,1) forwards;
+}
+.unl-check-mark {
+  stroke: #0f7b45;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: unl-check-mark 450ms 650ms cubic-bezier(.65,0,.45,1) forwards;
+}
+@keyframes unl-check-circle { to { stroke-dashoffset: 0; } }
+@keyframes unl-check-mark { to { stroke-dashoffset: 0; } }
+.unl-verified-title {
+  font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  color: var(--ql-text-primary);
+}
+.unl-verified-sub {
+  font-size: 12.5px;
+  color: var(--ql-text-muted);
+}
