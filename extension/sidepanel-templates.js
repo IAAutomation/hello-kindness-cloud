@@ -17,8 +17,8 @@ const SP_SVG = {
   search: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
 };
 
-const SP_WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y';
-const SP_YOUTUBE_CHANNEL_URL = 'https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y';
+const SP_WHATSAPP_CHANNEL_URL = '';
+const SP_YOUTUBE_CHANNEL_URL = '';
 
 const SP_TEMPLATES = [
   { icon: SP_SVG.wrench, label: "Bugs", prompt: "Analyze the code and identify all bugs, errors, and failures. Fix each one and explain the problem and the solution applied." },
@@ -76,11 +76,7 @@ function spTemplateMainUI(greeting, statusBadge) {
       '<div class="sp-sync-status" id="sp-sync">⏳ Waiting for sync...</div>' +
       '<div class="sp-trial-countdown" id="sp-countdown" style="display:none"></div>' +
     '</div>' +
-    '<div id="sp-reseller-btn" style="display:none;margin-bottom:14px">' +
-      '<a href="' + ((typeof DISCORD_SUPPORT_URL !== "undefined" && DISCORD_SUPPORT_URL) || "https://whatsapp.com/channel/0029VbBxV3f3wtbGgiOTYR0y") + '" target="_blank" rel="noopener noreferrer" class="pk-discord-cta">' +
-        '🔑 Join our YouTube channel<span style="margin-left:auto;font-size:10px;opacity:0.6">→</span>' +
-      '</a>' +
-    '</div>' +
+    '<div id="sp-reseller-btn" style="display:none"></div>' +
     '<textarea class="sp-textarea" id="sp-msg" rows="3" placeholder="Type your command..." spellcheck="false"></textarea>' +
     '<div id="sp-attach-preview" class="sp-attach-preview" style="display:none"></div>' +
     '<div class="sp-action-bar">' +
