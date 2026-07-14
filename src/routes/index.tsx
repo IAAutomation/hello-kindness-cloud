@@ -600,17 +600,18 @@ function Landing() {
                     <Glyph variant="burst" tint="coral" />
                   </div>
 
-                  <div className="mt-8 flex items-baseline gap-3">
-                    <div className="font-display text-7xl italic-serif">$29</div>
-                    <div className="text-lg text-espresso/50 line-through">
-                      $99
+                  <div className="mt-8 flex flex-wrap items-baseline gap-3">
+                    <div className="font-display text-6xl italic-serif leading-none">
+                      Let's talk
                     </div>
-                    <div className="rounded-full bg-mint/60 px-2 py-0.5 text-[10px] font-semibold text-espresso">
-                      SAVE 70%
+                    <div className="rounded-full bg-coral/20 px-3 py-1 text-[11px] font-semibold text-espresso">
+                      Custom pricing
                     </div>
                   </div>
-                  <p className="mt-1 text-sm text-espresso/60">
-                    One-time payment · Lifetime access · Every future update free
+                  <p className="mt-3 text-sm text-espresso/60">
+                    No fixed sticker price — message us on WhatsApp and we'll
+                    tailor a one-time deal that fits you. Lifetime access ·
+                    every future update free.
                   </p>
 
                   <div className="mt-8 grid gap-3 sm:grid-cols-2">
