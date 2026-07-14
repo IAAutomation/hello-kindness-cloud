@@ -974,6 +974,31 @@
 
   // --- Speech Recognition (Web Speech API) ---
   function setupSpSpeech() {
+    // handled elsewhere
+  }
+
+  // --- Landing page + WhatsApp quick-open buttons ---
+  var UNL_LANDING_URL = 'https://id-preview--1e2c0e1c-3316-4a14-961c-7d440c733bb9.lovable.app';
+  var UNL_WHATSAPP_NUMBER = '923165852898'; // +92 316 5852898
+  function setupSpLandingAndWhatsApp() {
+    var openTab = function (url) {
+      try {
+        if (typeof chrome !== 'undefined' && chrome.tabs && chrome.tabs.create) {
+          chrome.tabs.create({ url: url });
+          return;
+        }
+      } catch (e) {}
+      window.open(url, '_blank', 'noopener,noreferrer');
+    };
+    var lp = document.getElementById('sp-open-landing');
+    if (lp) lp.addEventListener('click', function () { openTab(UNL_LANDING_URL); });
+    var wa = document.getElementById('sp-whatsapp');
+    if (wa) wa.addEventListener('click', function () {
+      openTab('https://wa.me/' + UNL_WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Hi! I need help with Unlimitly.'));
+    });
+  }
+
+  function _origSetupSpSpeech_placeholder() {
     var btn = document.getElementById('sp-speech');
     if (!btn) return;
 
