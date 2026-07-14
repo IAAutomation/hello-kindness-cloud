@@ -628,6 +628,8 @@ body.sp-light .sp-chip:hover {
 .ed-act-c{color:var(--ed-rose)}  .ed-act-c .ed-act-g{background:linear-gradient(135deg,var(--ed-rose),#8a3a5a)}
 .ed-act-p{color:var(--ed-gold)}  .ed-act-p .ed-act-g{background:linear-gradient(135deg,#E6C25A,var(--ed-gold));color:#2A2620}
 .ed-act-cl{color:var(--ed-sky)}  .ed-act-cl .ed-act-g{background:linear-gradient(135deg,var(--ed-sky),var(--ed-pine))}
+.ed-act-lp{color:var(--ed-gold)} .ed-act-lp .ed-act-g{background:linear-gradient(135deg,#F0D78C,var(--ed-gold));color:#2A2620}
+.ed-act-wa{color:#25D366}        .ed-act-wa .ed-act-g{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff}
 
 /* ===== Humanize hero stamp — signature move ===== */
 .ed-humanize{

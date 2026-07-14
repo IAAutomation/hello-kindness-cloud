@@ -876,6 +876,8 @@
           '<button id="sp-quick-init" class="ed-act ed-act-c" title="Create new project"><span class="ed-act-halo"></span><span class="ed-act-g">C</span><span class="ed-act-txt"><span class="ed-act-l">Create</span><span class="ed-act-sub">a fresh project</span></span><span class="ed-act-chevron">›</span></button>' +
           '<button id="sp-publish-project" class="ed-act ed-act-p" title="Publish"><span class="ed-act-halo"></span><span class="ed-act-g">P</span><span class="ed-act-txt"><span class="ed-act-l">Publish</span><span class="ed-act-sub">ship it live</span></span><span class="ed-act-chevron">›</span></button>' +
           '<button id="sp-enable-cloud" class="ed-act ed-act-cl ed-act-wide" title="Enable Cloud"><span class="ed-act-halo"></span><span class="ed-act-g">☁</span><span class="ed-act-txt"><span class="ed-act-l">Enable Lovable Cloud</span><span class="ed-act-sub">database · auth · storage · edge functions</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-open-landing" class="ed-act ed-act-lp" title="Open Unlimitly landing page"><span class="ed-act-halo"></span><span class="ed-act-g">◎</span><span class="ed-act-txt"><span class="ed-act-l">Landing page</span><span class="ed-act-sub">visit unlimitly.site</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-whatsapp" class="ed-act ed-act-wa" title="Chat on WhatsApp"><span class="ed-act-halo"></span><span class="ed-act-g">✆</span><span class="ed-act-txt"><span class="ed-act-l">WhatsApp support</span><span class="ed-act-sub">+92 316 5852898 · tap to chat</span></span><span class="ed-act-chevron">›</span></button>' +
         '</div>' +
       '</div>' +
       '<div id="sp-download-status" class="sp-log ed-log" style="display:none"></div>';
@@ -967,6 +969,28 @@
     setupSpQuickInit();
     setupSpPublishProject();
     setupSpEnableCloud();
+    setupSpLandingAndWhatsApp();
+  }
+
+  // --- Landing page + WhatsApp quick-open buttons ---
+  var UNL_LANDING_URL = 'https://id-preview--1e2c0e1c-3316-4a14-961c-7d440c733bb9.lovable.app';
+  var UNL_WHATSAPP_NUMBER = '923165852898'; // +92 316 5852898
+  function setupSpLandingAndWhatsApp() {
+    var openTab = function (url) {
+      try {
+        if (typeof chrome !== 'undefined' && chrome.tabs && chrome.tabs.create) {
+          chrome.tabs.create({ url: url });
+          return;
+        }
+      } catch (e) {}
+      window.open(url, '_blank', 'noopener,noreferrer');
+    };
+    var lp = document.getElementById('sp-open-landing');
+    if (lp) lp.addEventListener('click', function () { openTab(UNL_LANDING_URL); });
+    var wa = document.getElementById('sp-whatsapp');
+    if (wa) wa.addEventListener('click', function () {
+      openTab('https://wa.me/' + UNL_WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Hi! I need help with Unlimitly.'));
+    });
   }
 
   // --- Speech Recognition (Web Speech API) ---
