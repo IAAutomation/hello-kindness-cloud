@@ -417,11 +417,15 @@ function Landing() {
               <br />
               <span className="italic-serif text-gradient">without limits.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-espresso/70">
-              Unlimitly is the premium extension that unlocks{" "}
-              <b className="text-espresso">unlimited prompts</b> on Lovable —
-              zero credits deducted, ever. Iterate fearlessly, ship
-              relentlessly.
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-espresso/75">
+              The premium extension that unlocks{" "}
+              <span className="italic-serif text-gradient font-semibold">unlimited prompts</span>{" "}
+              on Lovable —{" "}
+              <span className="rounded-md bg-butter px-1.5 py-0.5 font-semibold text-espresso ring-1 ring-gold/30">
+                zero credits deducted
+              </span>
+              , ever. <span className="italic-serif text-espresso">Iterate fearlessly.</span>{" "}
+              <span className="italic-serif text-gold">Ship relentlessly.</span>
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <a
@@ -528,7 +532,16 @@ function Landing() {
             <span className="italic-serif text-gold">every day.</span>
           </>
         }
-        lead="Our extension is instrumented end-to-end. Here's what the network looked like this morning."
+        lead={
+          <>
+            Instrumented <span className="italic-serif text-gold">end-to-end</span>. Here&apos;s
+            what the network{" "}
+            <span className="rounded bg-butter px-1.5 py-0.5 ring-1 ring-gold/25">
+              looked like this morning
+            </span>
+            .
+          </>
+        }
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((s) => (
@@ -600,7 +613,12 @@ function Landing() {
             <span className="italic-serif text-gold">Loud where it counts.</span>
           </>
         }
-        lead="Six deliberate features that get out of your way. No dashboards to babysit."
+        lead={
+          <>
+            <span className="italic-serif text-gold">Six deliberate features</span> that get out
+            of your way. <span className="text-espresso">No dashboards</span> to babysit.
+          </>
+        }
       >
         <div className="grid gap-4 md:grid-cols-12">
           {features.map((f, i) => {
@@ -828,7 +846,16 @@ function Landing() {
             Forever yours.
           </>
         }
-        lead="No fixed sticker price. We tailor the deal to your team size and use case — most builders hear back within 15 minutes."
+        lead={
+          <>
+            <span className="italic-serif text-gold">No sticker price.</span> We tailor every
+            deal to your team size &amp; use case —{" "}
+            <span className="rounded bg-butter px-1.5 py-0.5 font-semibold text-espresso ring-1 ring-gold/30">
+              most builders hear back within 15 minutes
+            </span>
+            .
+          </>
+        }
       >
         <div className="mx-auto max-w-4xl">
           <div
