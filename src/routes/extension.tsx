@@ -73,7 +73,7 @@ function ExtensionPreview() {
             ⬇ Download extension (.zip)
           </button>
           <a
-            href="/extension-preview/"
+            href="/extension-preview/index.html"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-gold)]/40 bg-transparent px-6 py-3 text-sm font-medium text-[color:var(--color-espresso)] hover:bg-[color:var(--color-butter)] transition-colors"
@@ -116,7 +116,7 @@ function ExtensionPreview() {
             <div className="rounded-[28px] border border-[color:var(--color-gold)]/30 bg-[color:var(--color-butter)] p-3 shadow-2xl">
               <div className="rounded-[20px] overflow-hidden bg-[color:var(--color-cream)]">
                 <iframe
-                  src="/extension-preview/"
+                  src="/extension-preview/index.html"
                   title="Unlimitly extension side panel preview"
                   className="block w-full"
                   style={{ height: "720px", border: "0" }}
