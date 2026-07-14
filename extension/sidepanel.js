@@ -876,6 +876,8 @@
           '<button id="sp-quick-init" class="ed-act ed-act-c" title="Create new project"><span class="ed-act-halo"></span><span class="ed-act-g">C</span><span class="ed-act-txt"><span class="ed-act-l">Create</span><span class="ed-act-sub">a fresh project</span></span><span class="ed-act-chevron">›</span></button>' +
           '<button id="sp-publish-project" class="ed-act ed-act-p" title="Publish"><span class="ed-act-halo"></span><span class="ed-act-g">P</span><span class="ed-act-txt"><span class="ed-act-l">Publish</span><span class="ed-act-sub">ship it live</span></span><span class="ed-act-chevron">›</span></button>' +
           '<button id="sp-enable-cloud" class="ed-act ed-act-cl ed-act-wide" title="Enable Cloud"><span class="ed-act-halo"></span><span class="ed-act-g">☁</span><span class="ed-act-txt"><span class="ed-act-l">Enable Lovable Cloud</span><span class="ed-act-sub">database · auth · storage · edge functions</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-open-landing" class="ed-act ed-act-lp" title="Open Unlimitly landing page"><span class="ed-act-halo"></span><span class="ed-act-g">◎</span><span class="ed-act-txt"><span class="ed-act-l">Landing page</span><span class="ed-act-sub">visit unlimitly.site</span></span><span class="ed-act-chevron">›</span></button>' +
+          '<button id="sp-whatsapp" class="ed-act ed-act-wa" title="Chat on WhatsApp"><span class="ed-act-halo"></span><span class="ed-act-g">✆</span><span class="ed-act-txt"><span class="ed-act-l">WhatsApp support</span><span class="ed-act-sub">+92 316 5852898 · tap to chat</span></span><span class="ed-act-chevron">›</span></button>' +
         '</div>' +
       '</div>' +
       '<div id="sp-download-status" class="sp-log ed-log" style="display:none"></div>';
@@ -967,6 +969,7 @@
     setupSpQuickInit();
     setupSpPublishProject();
     setupSpEnableCloud();
+    setupSpLandingAndWhatsApp();
   }
 
   // --- Speech Recognition (Web Speech API) ---
