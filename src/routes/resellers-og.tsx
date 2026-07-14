@@ -206,6 +206,14 @@ function ResellerDashboard({
     load();
   }
 
+  async function revokeKey(k: string) {
+    if (!confirm("Revoke " + k + " ?\n\nThis will immediately disable the extension for that client.")) return;
+    const { error } = await supabase.rpc("unl_reseller_revoke_key", { p_key: k });
+    if (error) return alert(error.message);
+    flash("Key revoked");
+    load();
+  }
+
   const remaining = me ? Math.max(0, me.quota - me.keys_created) : null;
 
   return (
@@ -341,14 +349,24 @@ function ResellerDashboard({
                     <td className="px-3 py-2">{fmt(k.activated_at)}</td>
                     <td className="px-3 py-2">{k.duration_type === "lifetime" ? "∞" : fmt(k.expires_at)}</td>
                     <td className="whitespace-nowrap px-3 py-2 text-right">
-                      {k.status === "active" && (
-                        <button
-                          onClick={() => resetBinding(k.key)}
-                          className="rounded border border-neutral-300 px-2 py-1 text-[11px] hover:bg-neutral-100"
-                        >
-                          Reset device
-                        </button>
-                      )}
+                      <div className="flex justify-end gap-1">
+                        {k.status === "active" && (
+                          <button
+                            onClick={() => resetBinding(k.key)}
+                            className="rounded border border-neutral-300 px-2 py-1 text-[11px] hover:bg-neutral-100"
+                          >
+                            Reset device
+                          </button>
+                        )}
+                        {k.status !== "revoked" && (
+                          <button
+                            onClick={() => revokeKey(k.key)}
+                            className="rounded border border-red-300 px-2 py-1 text-[11px] text-red-700 hover:bg-red-50"
+                          >
+                            Revoke
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
