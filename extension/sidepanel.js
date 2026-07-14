@@ -1943,25 +1943,28 @@
   async function init() {
     deviceId = await getDeviceId();
     chrome.storage.local.get(["ql_dark_mode"], r => { if(r.ql_dark_mode === false) document.body.classList.add('sp-light'); });
-    chrome.storage.local.get(["ql_channel_redirected", "ql_license_valid","ql_license_key","ql_user_name","ql_expires_at","ql_activated_at","ql_license_status","ql_validity_minutes","ql_session_id"], async (res) => {
-      if (!res.ql_channel_redirected) {
-        showChannelGate();
-      } else if (INTERNAL_LICENSE_MODE || res.ql_license_valid) {
-        if (INTERNAL_LICENSE_MODE && !res.ql_license_valid) {
-          await ensureInternalSessionLocal();
-        }
-        userName = normalizeLicenseUserName(res.ql_user_name);
-        expiresAt = res.ql_expires_at || null;
-        spActivatedAt = res.ql_activated_at || null;
-        licenseStatus = res.ql_license_status || null;
-        validityMinutes = res.ql_validity_minutes != null ? res.ql_validity_minutes : null;
-        sessionId = res.ql_session_id || null;
-        syncCreditBypassOnLovableTabs(true);
-        showMainUI();
-      } else {
-        showLicenseGate();
-      }
-    });
+    // Gate the whole extension behind Unlimitly activation key first.
+    if (window.UNL_GATE && typeof window.UNL_GATE.ensureActivated === 'function') {
+      window.UNL_GATE.ensureActivated(function () {
+        chrome.storage.local.get(["ql_license_valid","ql_license_key","ql_user_name","ql_expires_at","ql_activated_at","ql_license_status","ql_validity_minutes","ql_session_id"], async (res) => {
+          if (INTERNAL_LICENSE_MODE || res.ql_license_valid) {
+            if (INTERNAL_LICENSE_MODE && !res.ql_license_valid) {
+              await ensureInternalSessionLocal();
+            }
+            userName = normalizeLicenseUserName(res.ql_user_name);
+            expiresAt = res.ql_expires_at || null;
+            spActivatedAt = res.ql_activated_at || null;
+            licenseStatus = res.ql_license_status || null;
+            validityMinutes = res.ql_validity_minutes != null ? res.ql_validity_minutes : null;
+            sessionId = res.ql_session_id || null;
+            syncCreditBypassOnLovableTabs(true);
+            showMainUI();
+          } else {
+            showLicenseGate();
+          }
+        });
+      });
+    }
   }
   init();
 
