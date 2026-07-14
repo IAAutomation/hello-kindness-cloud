@@ -972,11 +972,6 @@
     setupSpLandingAndWhatsApp();
   }
 
-  // --- Speech Recognition (Web Speech API) ---
-  function setupSpSpeech() {
-    // handled elsewhere
-  }
-
   // --- Landing page + WhatsApp quick-open buttons ---
   var UNL_LANDING_URL = 'https://id-preview--1e2c0e1c-3316-4a14-961c-7d440c733bb9.lovable.app';
   var UNL_WHATSAPP_NUMBER = '923165852898'; // +92 316 5852898
@@ -998,7 +993,8 @@
     });
   }
 
-  function _origSetupSpSpeech_placeholder() {
+  // --- Speech Recognition (Web Speech API) ---
+  function setupSpSpeech() {
     var btn = document.getElementById('sp-speech');
     if (!btn) return;
 
