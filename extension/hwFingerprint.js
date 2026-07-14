@@ -1,7 +1,9 @@
 // ============================================
 // Unlimitly by Proflow Tools – Hardware Fingerprint
-// Generates a stable device hash from hardware
-// attributes that persist across browsers/cache
+// Generates a stable activation fingerprint for THIS extension install.
+// Important: one key must bind to one browser/extension install only.
+// Hardware-only fingerprints can match across Chrome/Edge/Brave on the
+// same computer, so we include a per-install secret stored in chrome.storage.
 // ============================================
 
 async function generateHardwareFingerprint() {
@@ -146,26 +148,52 @@ async function generateHardwareFingerprint() {
 // Cache the fingerprint to avoid recalculation
 let _cachedFingerprint = null;
 
+function randomInstallId() {
+  try {
+    if (crypto && crypto.randomUUID) return crypto.randomUUID();
+  } catch(e) {}
+  return 'install-' + Math.random().toString(36).slice(2) + '-' + Date.now().toString(36);
+}
+
+async function sha256Hex(raw) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(raw);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 async function getHardwareFingerprint() {
   if (_cachedFingerprint) return _cachedFingerprint;
 
-  // Check storage first
+  // Check storage first. ql_install_fingerprint_v2 is unique per browser
+  // profile / extension install, so the same key cannot be reused in another
+  // browser even on the same physical computer.
   return new Promise(async (resolve) => {
-    chrome.storage.local.get(["ql_hw_fingerprint"], async (res) => {
-      if (res.ql_hw_fingerprint) {
-        _cachedFingerprint = res.ql_hw_fingerprint;
+    chrome.storage.local.get(["ql_install_id_v2", "ql_install_fingerprint_v2"], async (res) => {
+      if (res.ql_install_fingerprint_v2) {
+        _cachedFingerprint = res.ql_install_fingerprint_v2;
         resolve(_cachedFingerprint);
       } else {
         try {
-          const fp = await generateHardwareFingerprint();
+          const installId = res.ql_install_id_v2 || randomInstallId();
+          let hardwareHash = '';
+          try { hardwareHash = await generateHardwareFingerprint(); } catch(e) {}
+          const fp = await sha256Hex('unlimitly-install-v2||' + installId + '||' + hardwareHash);
           _cachedFingerprint = fp;
-          chrome.storage.local.set({ ql_hw_fingerprint: fp });
+          chrome.storage.local.set({
+            ql_install_id_v2: installId,
+            ql_install_fingerprint_v2: fp
+          });
           resolve(fp);
         } catch(e) {
-          // Fallback to random UUID if fingerprint fails completely
-          const fallback = crypto.randomUUID();
+          // Fallback to random UUID if hashing/fingerprinting fails completely
+          const fallback = randomInstallId();
           _cachedFingerprint = fallback;
-          chrome.storage.local.set({ ql_hw_fingerprint: fallback });
+          chrome.storage.local.set({
+            ql_install_id_v2: fallback,
+            ql_install_fingerprint_v2: fallback
+          });
           resolve(fallback);
         }
       }
