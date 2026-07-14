@@ -1,5 +1,6 @@
 @import "tailwindcss" source(none);
 @source "../src";
+@source inline("bg-coral bg-apricot bg-lavender bg-mint bg-butter bg-rose bg-sky bg-cream border-coral border-apricot border-lavender border-mint border-butter border-rose border-sky border-cream text-coral text-apricot text-lavender text-mint text-butter text-rose text-sky text-cream fill-coral fill-apricot fill-lavender fill-mint fill-butter fill-rose fill-sky fill-cream");
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -140,5 +141,95 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
+  .font-display {
+    font-family: "Instrument Serif", ui-serif, Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@theme {
+  /* Fresh pastel palette — soft rose, sky, sage, peach & cream.
+     Token names preserved for backwards compatibility. */
+  --color-cream: #FFF5F7;      /* soft rose-white base */
+  --color-rose: #F5D0D7;       /* powder rose */
+  --color-sky: #B7D7E8;        /* dusty sky blue */
+  --color-lavender: #F8FBFF;   /* near-white lavender mist */
+  --color-coral: #FF61D6;      /* vivid pink accent */
+  --color-mint: #D8EAD7;       /* soft sage */
+  --color-apricot: #FFDCC2;    /* warm peach */
+  --color-butter: #FFF1E3;     /* creamy butter */
+  --color-espresso: #2A2540;   /* deep ink for text contrast */
+  --color-ink: #2A2540;
+}
+
+@utility btn-glow {
+  text-shadow:
+    0 0 12px color-mix(in oklab, currentColor 55%, transparent),
+    0 0 24px color-mix(in oklab, currentColor 30%, transparent),
+    0 1px 0 color-mix(in oklab, oklch(0 0 0) 25%, transparent);
+  letter-spacing: 0.01em;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(1.5deg); }
+}
+@keyframes blob {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(30px,-20px) scale(1.08); }
+  66% { transform: translate(-20px,25px) scale(0.95); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility animate-float { animation: float-slow 6s ease-in-out infinite; }
+@utility animate-blob { animation: blob 14s ease-in-out infinite; }
+@utility animate-marquee { animation: marquee 30s linear infinite; }
+@utility animate-rise { animation: rise 0.8s cubic-bezier(.2,.7,.2,1) both; }
+
+@utility card-3d {
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  transition: transform 0.5s cubic-bezier(.2,.7,.2,1), box-shadow 0.5s;
+}
+@utility card-3d-inner {
+  transition: transform 0.6s cubic-bezier(.2,.7,.2,1);
+  transform: translateZ(0);
+}
+.card-3d:hover .card-3d-inner {
+  transform: rotateX(6deg) rotateY(-8deg) translateZ(30px);
+}
+
+@utility glass {
+  background: color-mix(in oklab, oklch(0.98 0.01 95) 78%, transparent);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+}
+
+@utility text-gradient {
+  background: linear-gradient(120deg, #FF61D6, #B7D7E8, #FFDCC2);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+@utility italic-serif {
+  font-family: "Instrument Serif", ui-serif, Georgia, serif;
+  font-style: italic;
+  letter-spacing: -0.02em;
 }
