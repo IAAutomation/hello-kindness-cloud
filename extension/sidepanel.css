@@ -574,3 +574,33 @@ body.sp-light .sp-chip:hover {
 .ed-inline-btn{font-family:var(--ed-serif) !important;font-style:italic;font-size:12px !important;padding:6px 12px !important;border-radius:999px !important;border:1px solid var(--ed-ink) !important;background:#FEFBF1 !important;color:var(--ed-ink) !important;cursor:pointer;box-shadow:1.5px 1.5px 0 var(--ed-gold);transition:.15s;flex-shrink:0}
 .ed-inline-btn:hover{transform:translate(-1px,-1px);box-shadow:2.5px 2.5px 0 var(--ed-gold);background:var(--ed-ink) !important;color:#FEFBF1 !important}
 .ed-log{font-family:var(--ed-serif);font-style:italic;font-size:12.5px;color:var(--ed-muted);margin:6px 0}
+
+/* ===== Stable action bar (replaces old .ed-rows/.ed-rw stack) ===== */
+.ed-actionbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#FEFBF1;border:1px solid var(--ed-rule);border-radius:8px;box-shadow:inset 0 0 0 1px rgba(42,38,32,.02)}
+.ed-act{flex:1 1 calc(25% - 6px);min-width:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 6px;background:transparent;border:1px solid transparent;border-radius:6px;color:var(--ed-ink);cursor:pointer;transition:.15s;font-family:inherit}
+.ed-act:hover{background:#fff;border-color:var(--ed-rule);transform:translateY(-1px);box-shadow:0 4px 10px -6px rgba(42,38,32,.25)}
+.ed-act:active{transform:translateY(0)}
+.ed-act .ed-act-g{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--ed-serif);font-style:italic;font-size:13px;color:#FEFBF1;background:var(--ed-ink-2)}
+.ed-act .ed-act-l{font-size:10.5px;font-weight:600;letter-spacing:.02em;color:var(--ed-ink)}
+.ed-act-w .ed-act-g{background:var(--ed-clay)}
+.ed-act-s .ed-act-g{background:var(--ed-pine)}
+.ed-act-n .ed-act-g{background:var(--ed-plum)}
+.ed-act-d .ed-act-g{background:var(--ed-sky)}
+.ed-act-c .ed-act-g{background:var(--ed-rose)}
+.ed-act-p .ed-act-g{background:var(--ed-gold)}
+.ed-act-cl .ed-act-g{background:linear-gradient(135deg,var(--ed-sky),var(--ed-pine))}
+.ed-act:disabled{opacity:.55;cursor:wait}
+
+/* ===== Humanize hero stamp ===== */
+.ed-humanize{grid-column:span 3;flex-direction:row;align-items:center;gap:14px;padding:14px 14px;background:linear-gradient(135deg,#FFF6E4 0%,#FEFBF1 55%,#FFEFE0 100%);border:1px solid var(--ed-gold);border-left:4px solid var(--ed-clay);box-shadow:2px 2px 0 var(--ed-gold);position:relative;overflow:hidden}
+.ed-humanize:hover{transform:translate(-1px,-2px) rotate(0deg);box-shadow:4px 4px 0 var(--ed-gold);border-color:var(--ed-clay)}
+.ed-humanize .ed-hum-glyph{width:44px;height:44px;font-size:20px;background:linear-gradient(135deg,var(--ed-clay),var(--ed-sun));box-shadow:0 4px 12px -4px rgba(196,120,60,.5);flex-shrink:0}
+.ed-humanize .ed-copy{gap:3px;flex:1;text-align:left}
+.ed-humanize .ed-hum-eyebrow{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ed-clay);font-weight:700}
+.ed-humanize .ed-hum-name{font-size:15.5px;color:var(--ed-ink)}
+.ed-humanize .ed-hum-whisper{font-size:11px;color:var(--ed-muted);font-style:italic;line-height:1.4}
+.ed-humanize .ed-hum-arrow{font-family:var(--ed-serif);font-style:italic;font-size:22px;color:var(--ed-clay);flex-shrink:0}
+
+/* ===== Project gate ===== */
+.sp-project-gate .ed-card{border:1px dashed var(--ed-gold);background:#FFFCF3}
+.sp-project-gate code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;background:rgba(196,120,60,.08);padding:1px 5px;border-radius:3px;color:var(--ed-clay)}
