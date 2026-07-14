@@ -151,18 +151,22 @@
 }
 
 @theme {
-  /* Fresh pastel palette — soft rose, sky, sage, peach & cream.
-     Token names preserved for backwards compatibility. */
-  --color-cream: #FFF5F7;      /* soft rose-white base */
-  --color-rose: #F5D0D7;       /* powder rose */
-  --color-sky: #B7D7E8;        /* dusty sky blue */
-  --color-lavender: #F8FBFF;   /* near-white lavender mist */
-  --color-coral: #FF61D6;      /* vivid pink accent */
-  --color-mint: #D8EAD7;       /* soft sage */
-  --color-apricot: #FFDCC2;    /* warm peach */
-  --color-butter: #FFF1E3;     /* creamy butter */
-  --color-espresso: #2A2540;   /* deep ink for text contrast */
-  --color-ink: #2A2540;
+  /* Editorial Ivory & Gold — light noir inversion. Warm ivory canvas,
+     deep espresso ink, warm gold accent, pale gold highlight. Legacy
+     token names preserved so existing utilities keep resolving. */
+  --color-cream: #FBF8F1;       /* warm ivory canvas */
+  --color-butter: #F5EEDD;      /* soft sand surface */
+  --color-rose: #EFE5CE;        /* muted parchment */
+  --color-sky: #E7DFCB;         /* subtle warm neutral */
+  --color-lavender: #FFFDF7;    /* near-white paper */
+  --color-mint: #EAE3CE;        /* aged paper */
+  --color-apricot: #F0D78C;     /* pale gold highlight */
+  --color-coral: #C9A84C;       /* signature gold accent */
+  --color-espresso: #1B1A17;    /* deep espresso ink */
+  --color-ink: #1B1A17;
+  --color-gold: #C9A84C;
+  --color-gold-light: #F0D78C;
+  --color-muted-ink: #6B655A;
 }
 
 @utility btn-glow {
@@ -220,7 +224,7 @@
 }
 
 @utility text-gradient {
-  background: linear-gradient(120deg, #FF61D6, #B7D7E8, #FFDCC2);
+  background: linear-gradient(120deg, #C9A84C, #B8860B, #F0D78C, #C9A84C);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
