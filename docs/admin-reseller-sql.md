@@ -202,7 +202,16 @@ end $$;
 create or replace function public.unl_reseller_me()
 returns table(id uuid, quota int, keys_created int, disabled boolean)
 language sql security definer set search_path = public as $$
-  select r.id, r.quota, r.keys_created, r.disabled
+  -- keys_created is computed dynamically from non-revoked keys so that
+  -- revoking or deleting a key immediately frees quota again.
+  select r.id,
+         r.quota,
+         coalesce((
+           select count(*)::int from license_keys lk
+           where lk.created_by_reseller_id = r.id
+             and lk.status <> 'revoked'
+         ), 0) as keys_created,
+         r.disabled
   from resellers r
   where r.user_id = auth.uid() and has_role(auth.uid(), 'reseller')
 $$;
@@ -211,11 +220,18 @@ create or replace function public.unl_reseller_create_key(
   p_duration text, p_client_name text default null
 ) returns table(key text)
 language plpgsql security definer set search_path = public as $$
-declare v_key text; v_r resellers%rowtype; begin
+declare
+  v_key text;
+  v_r resellers%rowtype;
+  v_used int;
+begin
   if not has_role(auth.uid(), 'reseller') then raise exception 'not a reseller'; end if;
   select * into v_r from resellers where user_id = auth.uid() for update;
   if v_r.disabled then raise exception 'reseller disabled'; end if;
-  if v_r.keys_created >= v_r.quota then raise exception 'quota reached'; end if;
+  select count(*)::int into v_used
+    from license_keys
+   where created_by_reseller_id = v_r.id and status <> 'revoked';
+  if v_used >= v_r.quota then raise exception 'quota reached'; end if;
   if p_duration = 'lifetime' then raise exception 'lifetime keys are admin-only'; end if;
   loop
     v_key := unl_gen_key();
@@ -223,7 +239,8 @@ declare v_key text; v_r resellers%rowtype; begin
   end loop;
   insert into license_keys(key, duration_type, status, client_name, created_by_reseller_id)
   values (v_key, p_duration, 'unused', p_client_name, v_r.id);
-  update resellers set keys_created = keys_created + 1 where id = v_r.id;
+  -- keep the legacy counter roughly in sync for admin views
+  update resellers set keys_created = v_used + 1 where id = v_r.id;
   return query select v_key;
 end $$;
 
@@ -256,6 +273,26 @@ declare v_owner uuid; begin
          status = case when status = 'active' then 'unused' else status end
    where key = p_key;
 end $$;
+
+-- Revoke one of the reseller's own keys. Frees quota because
+-- unl_reseller_me / unl_reseller_create_key count non-revoked keys only.
+create or replace function public.unl_reseller_revoke_key(p_key text)
+returns void language plpgsql security definer set search_path = public as $$
+declare v_owner uuid; v_rid uuid; begin
+  if not has_role(auth.uid(), 'reseller') then raise exception 'not a reseller'; end if;
+  select r.user_id, r.id into v_owner, v_rid
+    from license_keys lk
+    join resellers r on r.id = lk.created_by_reseller_id
+   where lk.key = p_key;
+  if v_owner is null or v_owner <> auth.uid() then raise exception 'not your key'; end if;
+  update license_keys set status = 'revoked' where key = p_key;
+  update resellers
+     set keys_created = coalesce((
+       select count(*)::int from license_keys lk
+       where lk.created_by_reseller_id = v_rid and lk.status <> 'revoked'
+     ), 0)
+   where id = v_rid;
+end $$;
 ```
 
 ## Grants for the RPCs
@@ -273,7 +310,8 @@ grant execute on function
   public.unl_reseller_me(),
   public.unl_reseller_create_key(text,text),
   public.unl_reseller_list_keys(),
-  public.unl_reseller_reset_binding(text)
+  public.unl_reseller_reset_binding(text),
+  public.unl_reseller_revoke_key(text)
 to authenticated;
 ```
 
