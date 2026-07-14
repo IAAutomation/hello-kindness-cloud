@@ -20,7 +20,7 @@ export const Route = createFileRoute("/extension")({
 });
 
 function ExtensionDownloadPage() {
-  const ZIP_URL = "/unlimitly-extension.zip";
+  const ZIP_URL = "/api/public/download-extension";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[color:var(--color-cream)] text-[color:var(--color-espresso)]">
