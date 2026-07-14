@@ -273,3 +273,34 @@
   </div>
 </body>
 </html>
+<script>
+(function(){
+  const prompts = {
+    's-bug': "Act as a senior engineer doing a bug hunt on this project. Scan the whole codebase for: runtime errors, silent failures, incorrect state updates, race conditions, off-by-one and null/undefined issues, unhandled promise rejections, and broken edge cases. For each bug: (1) name the file and line, (2) explain the root cause in plain English, (3) show a minimal fix as a diff, (4) note any regression risk. Prioritize by severity (crash > data loss > wrong UI > cosmetic). Then apply the fixes.",
+    's-ref': "Refactor this codebase for clarity without changing behavior. Extract repeated logic into small, well-named functions; collapse deep nesting; replace magic numbers with named constants; split god-components into focused ones; move types next to usage; keep public APIs stable. Do it in small, reviewable steps and after each step explain what changed and why. No feature changes, no visual changes — same soul, cleaner bones.",
+    's-err': "Find every error surface in this app — thrown exceptions, failed fetches, broken imports, TypeScript errors, console errors, and error boundaries hit at runtime. For each: reproduce it in words, trace the root cause, fix it, and add a small guard (try/catch, fallback, type narrowing, or default state) so the same class of error can't come back. Finish by running through the app mentally page by page and reporting anything still unstable.",
+    's-opt': "Optimize this project for real performance — not micro-benchmarks. Focus on: bundle size (unused deps, heavy imports, tree-shakeable alternatives), render performance (memoization where it matters, key correctness, avoiding re-render cascades), network (waterfall requests, missing caching, oversized images), and perceived speed (skeletons, optimistic UI). Measure before/after where possible and list every change with the expected impact.",
+    's-cmt': "Add thoughtful comments across the codebase — the kind a new teammate would thank you for. Explain the *why*, not the *what*: business rules, non-obvious edge cases, workarounds, invariants, and 'do not touch this' warnings. Add JSDoc/TSDoc to exported functions with @param and @returns. Skip comments that just restate the code. Keep them short and honest.",
+    's-seo': "Do a full on-page SEO pass on this site. For every route: write a unique, human title under 60 chars and meta description under 160 chars; set og:title, og:description, og:type, og:image, twitter:card; ensure one clear H1 with the primary keyword; add semantic HTML (header/main/nav/article/section/footer); write descriptive alt text on every image; add JSON-LD (Organization, WebSite, and per-page schema like Article/Product/FAQ where relevant); set canonical tags; make sure the viewport meta is present. Report the changes route by route.",
+    's-ui': "Polish the UI end-to-end. Fix spacing rhythm (consistent 4/8px scale), type hierarchy (max 3 sizes per view, correct weight/leading), color contrast (AA minimum), alignment on every card and form row, focus states on every interactive element, hover/active feedback, empty states, loading skeletons, and mobile layout at 375px, 414px, 768px. Small mercies matter — round the right corners, soften shadows, breathe. Walk the whole app and fix as you go.",
+    's-cmp': "Extract the reusable UI into a clean component library inside this project. Identify duplicated JSX, promote it to a single component with a narrow props API, put it in `src/components/`, add TypeScript types, sensible defaults, and a short usage comment at the top. Replace all previous inline copies with the new component. Keep behavior identical. List every component created and every callsite migrated.",
+    's-rev': "Do a code review of this project as if you were a staff engineer opening the PR. Cover: architecture (is anything in the wrong layer?), correctness (bugs, edge cases, race conditions), security (secrets in client, unvalidated inputs, missing auth checks, RLS gaps), performance, accessibility, and code smell. Give a prioritized list: must-fix, should-fix, nice-to-have. Be direct, be kind, and suggest concrete fixes — not just complaints.",
+    's-hum': "Humanize this UI. Right now it feels AI-generated — too symmetrical, too generic, too polite. Give it warmth and personality: a distinctive typeface pairing (not Inter), a considered color palette with real character, editorial rhythm (asymmetry, generous whitespace, deliberate density), microcopy that sounds like a person wrote it (short, honest, occasionally playful), small tactile details (subtle grain, hand-drawn accents, imperfect alignment where it helps), and motion that feels natural rather than snappy. Walk every page and rework it. No purple gradients, no sparkle icons, no 'AI-magic' clichés."
+  };
+  document.querySelectorAll('.stamp').forEach(btn => {
+    const key = [...btn.classList].find(c => prompts[c]);
+    if (!key) return;
+    btn.addEventListener('click', () => {
+      const ta = document.querySelector('.card textarea');
+      if (!ta) return;
+      ta.value = prompts[key];
+      ta.focus();
+      ta.scrollTop = 0;
+      ta.style.transition = 'background .5s';
+      ta.style.background = 'rgba(212,162,46,.14)';
+      setTimeout(() => ta.style.background = 'transparent', 500);
+      document.querySelector('.card').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+})();
+</script>
