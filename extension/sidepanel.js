@@ -523,6 +523,12 @@
     if(heartbeatInterval) clearInterval(heartbeatInterval);
     if (!INTERNAL_LICENSE_MODE) syncCreditBypassOnLovableTabs(false);
     chrome.storage.local.remove(["ql_license_valid","ql_license_key","ql_session_id","ql_user_name","ql_expires_at","ql_activated_at","ql_license_status"], async () => {
+      // Also clear Unlimitly activation so user is returned to the welcome/activation screen.
+      if (window.UNL_GATE && typeof window.UNL_GATE.clear === 'function') {
+        await window.UNL_GATE.clear();
+        window.UNL_GATE.showWelcome();
+        return;
+      }
       userName = null; expiresAt = null; licenseStatus = null; sessionId = null;
       if (INTERNAL_LICENSE_MODE) {
         try {
