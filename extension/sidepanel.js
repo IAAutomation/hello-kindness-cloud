@@ -782,7 +782,7 @@
       checkUnread();
       checkForUpdate();
       checkResellerRole();
-      setupWhatsAppPopup();
+      // setupWhatsAppPopup removed — no popups after license activation
     });
   }
 
