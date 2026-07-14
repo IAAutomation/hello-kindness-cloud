@@ -1015,47 +1015,31 @@ function Landing() {
 
       {/* FOOTER */}
       <footer className="border-t border-espresso/10 bg-butter/50">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <div className="grid h-8 w-8 place-items-center rounded-xl bg-gold">
-                <div className="h-3 w-3 rotate-45 border-2 border-espresso" />
-              </div>
-              <span className="font-display text-xl italic-serif">Unlimitly</span>
-            </div>
-            <p className="mt-3 text-sm text-espresso/60">
-              An extension by ProFlow Tools. Built for builders who refuse to
-              ration ideas.
-            </p>
-          </div>
-          {[
-            { title: "Product", items: ["Features", "How it works", "Pricing", "Changelog"] },
-            { title: "Company", items: ["About", "Studio", "Contact", "WhatsApp"] },
-            { title: "Legal", items: ["Terms", "Privacy", "Refunds", "Security"] },
-          ].map((col) => (
-            <div key={col.title}>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-espresso/50">
-                {col.title}
-              </div>
-              <ul className="mt-4 space-y-2 text-sm">
-                {col.items.map((it) => (
-                  <li key={it}>
-                    <a
-                      href="#"
-                      className="text-espresso/70 transition hover:text-gold"
-                    >
-                      {it}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="border-t border-espresso/10">
-          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-6 text-[11px] uppercase tracking-[0.2em] text-espresso/50 md:flex-row">
-            <span>© 2026 ProFlow Tools · Handcrafted for builders</span>
-            <span>Made without watching a credit meter</span>
+        <div className="mx-auto max-w-6xl px-6 py-10">
+          <nav
+            aria-label="Sections"
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-espresso/70"
+          >
+            {[
+              { href: "#metrics", label: "Metrics" },
+              { href: "#features", label: "Features" },
+              { href: "#how", label: "How it works" },
+              { href: "#compare", label: "Compare" },
+              { href: "#pricing", label: "Pricing" },
+              { href: "#faq", label: "FAQ" },
+            ].map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="transition hover:text-gold"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+          <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
+          <div className="mt-5 flex flex-col items-center justify-center gap-1 text-[10px] uppercase tracking-[0.22em] text-espresso/50">
+            <span>© 2026 Unlimitly · ProFlow Tools</span>
           </div>
         </div>
       </footer>
