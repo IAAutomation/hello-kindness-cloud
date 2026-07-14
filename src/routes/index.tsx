@@ -50,7 +50,7 @@ function Section({
   id?: string;
   eyebrow: string;
   title: React.ReactNode;
-  lead?: string;
+  lead?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -64,7 +64,12 @@ function Section({
           {title}
         </h2>
         {lead && (
-          <p className="mx-auto mt-5 max-w-xl text-espresso/70">{lead}</p>
+          <div className="mx-auto mt-6 flex max-w-2xl flex-col items-center gap-3">
+            <span aria-hidden className="h-px w-14 bg-gradient-to-r from-transparent via-gold to-transparent" />
+            <p className="text-[15px] leading-relaxed text-espresso/75 md:text-base">
+              {lead}
+            </p>
+          </div>
         )}
       </div>
       {children}
@@ -412,11 +417,15 @@ function Landing() {
               <br />
               <span className="italic-serif text-gradient">without limits.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-espresso/70">
-              Unlimitly is the premium extension that unlocks{" "}
-              <b className="text-espresso">unlimited prompts</b> on Lovable —
-              zero credits deducted, ever. Iterate fearlessly, ship
-              relentlessly.
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-espresso/75">
+              The premium extension that unlocks{" "}
+              <span className="italic-serif text-gradient font-semibold">unlimited prompts</span>{" "}
+              on Lovable —{" "}
+              <span className="rounded-md bg-butter px-1.5 py-0.5 font-semibold text-espresso ring-1 ring-gold/30">
+                zero credits deducted
+              </span>
+              , ever. <span className="italic-serif text-espresso">Iterate fearlessly.</span>{" "}
+              <span className="italic-serif text-gold">Ship relentlessly.</span>
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <a
@@ -523,7 +532,16 @@ function Landing() {
             <span className="italic-serif text-gold">every day.</span>
           </>
         }
-        lead="Our extension is instrumented end-to-end. Here's what the network looked like this morning."
+        lead={
+          <>
+            Instrumented <span className="italic-serif text-gold">end-to-end</span>. Here&apos;s
+            what the network{" "}
+            <span className="rounded bg-butter px-1.5 py-0.5 ring-1 ring-gold/25">
+              looked like this morning
+            </span>
+            .
+          </>
+        }
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((s) => (
@@ -595,7 +613,12 @@ function Landing() {
             <span className="italic-serif text-gold">Loud where it counts.</span>
           </>
         }
-        lead="Six deliberate features that get out of your way. No dashboards to babysit."
+        lead={
+          <>
+            <span className="italic-serif text-gold">Six deliberate features</span> that get out
+            of your way. <span className="text-espresso">No dashboards</span> to babysit.
+          </>
+        }
       >
         <div className="grid gap-4 md:grid-cols-12">
           {features.map((f, i) => {
@@ -823,7 +846,16 @@ function Landing() {
             Forever yours.
           </>
         }
-        lead="No fixed sticker price. We tailor the deal to your team size and use case — most builders hear back within 15 minutes."
+        lead={
+          <>
+            <span className="italic-serif text-gold">No sticker price.</span> We tailor every
+            deal to your team size &amp; use case —{" "}
+            <span className="rounded bg-butter px-1.5 py-0.5 font-semibold text-espresso ring-1 ring-gold/30">
+              most builders hear back within 15 minutes
+            </span>
+            .
+          </>
+        }
       >
         <div className="mx-auto max-w-4xl">
           <div
@@ -983,47 +1015,31 @@ function Landing() {
 
       {/* FOOTER */}
       <footer className="border-t border-espresso/10 bg-butter/50">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <div className="grid h-8 w-8 place-items-center rounded-xl bg-gold">
-                <div className="h-3 w-3 rotate-45 border-2 border-espresso" />
-              </div>
-              <span className="font-display text-xl italic-serif">Unlimitly</span>
-            </div>
-            <p className="mt-3 text-sm text-espresso/60">
-              An extension by ProFlow Tools. Built for builders who refuse to
-              ration ideas.
-            </p>
-          </div>
-          {[
-            { title: "Product", items: ["Features", "How it works", "Pricing", "Changelog"] },
-            { title: "Company", items: ["About", "Studio", "Contact", "WhatsApp"] },
-            { title: "Legal", items: ["Terms", "Privacy", "Refunds", "Security"] },
-          ].map((col) => (
-            <div key={col.title}>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-espresso/50">
-                {col.title}
-              </div>
-              <ul className="mt-4 space-y-2 text-sm">
-                {col.items.map((it) => (
-                  <li key={it}>
-                    <a
-                      href="#"
-                      className="text-espresso/70 transition hover:text-gold"
-                    >
-                      {it}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="border-t border-espresso/10">
-          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-6 text-[11px] uppercase tracking-[0.2em] text-espresso/50 md:flex-row">
-            <span>© 2026 ProFlow Tools · Handcrafted for builders</span>
-            <span>Made without watching a credit meter</span>
+        <div className="mx-auto max-w-6xl px-6 py-10">
+          <nav
+            aria-label="Sections"
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-espresso/70"
+          >
+            {[
+              { href: "#metrics", label: "Metrics" },
+              { href: "#features", label: "Features" },
+              { href: "#how", label: "How it works" },
+              { href: "#compare", label: "Compare" },
+              { href: "#pricing", label: "Pricing" },
+              { href: "#faq", label: "FAQ" },
+            ].map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="transition hover:text-gold"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+          <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
+          <div className="mt-5 flex flex-col items-center justify-center gap-1 text-[10px] uppercase tracking-[0.22em] text-espresso/50">
+            <span>© 2026 Unlimitly · ProFlow Tools</span>
           </div>
         </div>
       </footer>
