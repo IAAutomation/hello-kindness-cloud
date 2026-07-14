@@ -902,3 +902,53 @@ body.sp-light .sp-chip:hover {
   font-size: 12.5px;
   color: var(--ql-text-muted);
 }
+
+/* Invalid state */
+.unl-gate-invalid .unl-invalid-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: unl-line-in 500ms ease forwards;
+  text-align: center;
+  max-width: 320px;
+}
+.unl-cross-circle {
+  stroke: #b3261e;
+  stroke-width: 2;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: unl-check-circle 700ms cubic-bezier(.65,0,.45,1) forwards;
+}
+.unl-cross-mark {
+  stroke: #b3261e;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: unl-check-mark 420ms 650ms cubic-bezier(.65,0,.45,1) forwards;
+}
+.unl-invalid-title {
+  font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  color: var(--ql-text-primary);
+  margin: 0;
+}
+.unl-invalid-sub {
+  font-size: 12.5px;
+  color: var(--ql-text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+.unl-invalid-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 6px;
+  align-items: center;
+}
+.unl-try-again-btn {
+  min-width: 180px;
+}
