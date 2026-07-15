@@ -24,14 +24,14 @@ as $$
   from (
     select
       r.id as reseller_id,
-      r.quota,
+      r.key_quota as quota,
       coalesce(count(k.id) filter (where k.status::text <> 'revoked'), 0)::int as keys_created,
-      r.disabled
+      (not r.is_active) as disabled
     from public.resellers r
     left join public.license_keys k on k.created_by_reseller = r.id
     where r.user_id = auth.uid()
       and public.has_role(auth.uid(), 'reseller')
-    group by r.id, r.quota, r.disabled
+    group by r.id, r.key_quota, r.is_active
   ) sub
 $$;
 
@@ -132,15 +132,15 @@ as $$
     r.id,
     r.user_id,
     u.email::text,
-    r.quota,
+    r.key_quota as quota,
     coalesce(count(k.id) filter (where k.status::text <> 'revoked'), 0)::int as keys_created,
-    r.disabled,
+    (not r.is_active) as disabled,
     r.created_at
   from public.resellers r
   join auth.users u on u.id = r.user_id
   left join public.license_keys k on k.created_by_reseller = r.id
   where public.has_role(auth.uid(), 'admin')
-  group by r.id, r.user_id, u.email, r.quota, r.disabled, r.created_at
+  group by r.id, r.user_id, u.email, r.key_quota, r.is_active, r.created_at
   order by r.created_at desc
 $$;
 
