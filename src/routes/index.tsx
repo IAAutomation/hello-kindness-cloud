@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -458,14 +458,13 @@ function Landing() {
                 Talk pricing on WhatsApp
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </a>
-              <a
-                href={EXTENSION_DOWNLOAD_URL}
-                download="unlimitly-extension.zip"
+              <Link
+                to="/extension"
                 className="group inline-flex items-center gap-2 rounded-2xl border border-gold/50 bg-gold px-6 py-4 text-sm font-bold uppercase tracking-wider text-espresso shadow-[0_16px_40px_-18px_rgba(201,168,76,0.65)] transition hover:-translate-y-0.5 hover:bg-gold-light"
               >
                 Download extension
                 <Download className="h-4 w-4 transition group-hover:translate-y-0.5" />
-              </a>
+              </Link>
               <button
                 type="button"
                 onClick={() => setVideoOpen(true)}
