@@ -17,6 +17,7 @@ import {
   TrendingUp,
   ChevronDown,
   Download,
+  X,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -40,6 +41,9 @@ const WHATSAPP_URL =
   );
 
 const EXTENSION_DOWNLOAD_URL = "/api/public/download-extension";
+
+const TUTORIAL_VIDEO_URL =
+  "https://www.dropbox.com/scl/fi/jh32q741zha8vtct6po67/unlimitly-tutorial.mp4?rlkey=uyrfd9v26y48y39so02iu7l1k&raw=1";
 
 /* ---------- primitives ---------- */
 
@@ -239,6 +243,20 @@ function Landing() {
   }, []);
 
   const [openFaq, setOpenFaq] = useState(0);
+  const [videoOpen, setVideoOpen] = useState(false);
+  useEffect(() => {
+    if (!videoOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setVideoOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [videoOpen]);
 
   const tools = [
     "Landing pages",
@@ -448,12 +466,13 @@ function Landing() {
                 Download extension
                 <Download className="h-4 w-4 transition group-hover:translate-y-0.5" />
               </a>
-              <a
-                href="#how"
+              <button
+                type="button"
+                onClick={() => setVideoOpen(true)}
                 className="inline-flex items-center gap-2 rounded-2xl border border-espresso/20 bg-butter px-6 py-4 text-sm font-semibold text-espresso transition hover:-translate-y-0.5 hover:border-gold hover:text-gold"
               >
                 See how it works
-              </a>
+              </button>
             </div>
             <div className="mt-8 flex items-center gap-6 text-xs text-espresso/60">
               <div className="flex -space-x-2">
