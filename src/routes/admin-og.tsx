@@ -351,52 +351,6 @@ function AdminDashboard({
             </div>
           </div>
 
-          <div className="rounded-lg border border-neutral-200 bg-white p-4">
-            <h2 className="mb-1 text-sm font-semibold">Bulk generate</h2>
-            <p className="mb-3 text-xs text-neutral-500">
-              Generate up to 500 keys at once. A .txt file with all keys downloads automatically.
-            </p>
-            <div className="flex flex-wrap items-center gap-2">
-              <input
-                type="number"
-                min={1}
-                max={500}
-                value={bulkCount}
-                onChange={(e) => setBulkCount(Number(e.target.value))}
-                className="w-24 rounded-md border border-neutral-300 px-3 py-2 text-sm"
-                title="Number of keys"
-              />
-              <select
-                value={bulkDuration}
-                onChange={(e) => setBulkDuration(e.target.value as any)}
-                className="rounded-md border border-neutral-300 px-3 py-2 text-sm"
-              >
-                <option value="1m">1 month</option>
-                <option value="3m">3 months</option>
-                <option value="6m">6 months</option>
-                <option value="1y">1 year</option>
-                <option value="lifetime">Lifetime</option>
-              </select>
-              <input
-                placeholder="Batch label (optional, e.g. Reseller-A)"
-                value={bulkLabel}
-                onChange={(e) => setBulkLabel(e.target.value)}
-                className="flex-1 min-w-[200px] rounded-md border border-neutral-300 px-3 py-2 text-sm"
-              />
-              <button
-                onClick={bulkCreate}
-                disabled={bulkBusy}
-                className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:opacity-50"
-              >
-                {bulkBusy
-                  ? bulkProgress
-                    ? `Generating ${bulkProgress.done}/${bulkProgress.total}…`
-                    : "Generating…"
-                  : "Generate & download .txt"}
-              </button>
-            </div>
-          </div>
-
           <div className="rounded-lg border border-neutral-200 bg-white">
             <div className="flex items-center justify-between border-b border-neutral-200 px-4 py-3">
               <h2 className="text-sm font-semibold">
