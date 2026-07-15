@@ -17,15 +17,22 @@ security definer
 set search_path = public
 as $$
   select
-    r.id,
-    r.quota,
-    coalesce(count(k.id) filter (where k.status::text <> 'revoked'), 0)::int as keys_created,
-    r.disabled
-  from public.resellers r
-  left join public.license_keys k on k.created_by_reseller = r.id
-  where r.user_id = auth.uid()
-    and public.has_role(auth.uid(), 'reseller')
-  group by r.id, r.quota, r.disabled
+    sub.reseller_id as id,
+    sub.quota,
+    sub.keys_created,
+    sub.disabled
+  from (
+    select
+      r.id as reseller_id,
+      r.quota,
+      coalesce(count(k.id) filter (where k.status::text <> 'revoked'), 0)::int as keys_created,
+      r.disabled
+    from public.resellers r
+    left join public.license_keys k on k.created_by_reseller = r.id
+    where r.user_id = auth.uid()
+      and public.has_role(auth.uid(), 'reseller')
+    group by r.id, r.quota, r.disabled
+  ) sub
 $$;
 
 create or replace function public.unl_reseller_list_keys()
