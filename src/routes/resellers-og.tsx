@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { getUnlSupabase } from "@/lib/unl-supabase";
+import { downloadKeysTxt } from "./admin-og";
 
 export const Route = createFileRoute("/resellers-og")({
   ssr: false,
@@ -154,6 +155,12 @@ function ResellerDashboard({
   const [clientName, setClientName] = useState("");
   const [creating, setCreating] = useState(false);
 
+  const [bulkCount, setBulkCount] = useState(10);
+  const [bulkDuration, setBulkDuration] = useState<"1m" | "3m" | "6m" | "1y">("1m");
+  const [bulkLabel, setBulkLabel] = useState("");
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
+
   async function load() {
     setLoading(true);
     setErr(null);
@@ -195,6 +202,39 @@ function ResellerDashboard({
       flash("Key created: " + newKey);
     }
     setClientName("");
+    load();
+  }
+
+  async function bulkCreate() {
+    const remainingNow = me ? Math.max(0, me.quota - me.keys_created) : 0;
+    const wanted = Math.max(1, Math.min(500, Number(bulkCount) || 0));
+    const n = Math.min(wanted, remainingNow);
+    if (n <= 0) return alert("No quota remaining.");
+    if (n < wanted && !confirm(`Only ${n} keys fit in your remaining quota. Generate ${n}?`)) return;
+    else if (n === wanted && !confirm(`Generate ${n} ${bulkDuration} keys?`)) return;
+    setBulkBusy(true);
+    setBulkProgress({ done: 0, total: n });
+    const created: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const cname = bulkLabel ? `${bulkLabel} #${i + 1}` : null;
+      const { data, error } = await supabase.rpc("unl_reseller_create_key", {
+        p_duration: bulkDuration,
+        p_client_name: cname,
+      });
+      if (error) {
+        alert(`Stopped at ${i}/${n}: ${error.message}`);
+        break;
+      }
+      const k = Array.isArray(data) ? data[0]?.key : (data as any)?.key || data;
+      if (k) created.push(String(k));
+      setBulkProgress({ done: i + 1, total: n });
+    }
+    setBulkBusy(false);
+    setBulkProgress(null);
+    if (created.length > 0) {
+      downloadKeysTxt(created, bulkDuration, bulkLabel || "reseller");
+      flash(`Generated ${created.length} keys — file downloaded`);
+    }
     load();
   }
 
