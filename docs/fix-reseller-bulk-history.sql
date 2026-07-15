@@ -7,6 +7,7 @@ drop function if exists public.unl_reseller_list_keys(boolean);
 drop function if exists public.unl_reseller_list_bulk_batches();
 drop function if exists public.unl_admin_list_resellers();
 drop function if exists public.unl_admin_list_keys();
+drop function if exists public.unl_admin_list_keys(boolean);
 drop function if exists public.unl_admin_list_bulk_batches();
 drop function if exists public.unl_get_batch_keys(uuid);
 
