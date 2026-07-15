@@ -13,6 +13,8 @@ type KeyRow = {
   client_name: string | null;
   created_at: string;
   batch_id?: string | null;
+  batch_size?: number | null;
+  batch_label?: string | null;
 };
 
 type ResellerInfo = { id: string; quota: number; keys_created: number; disabled: boolean };
@@ -38,6 +40,31 @@ type BatchKey = {
   activated_at: string | null;
   device_fingerprint: string | null;
 };
+
+function buildBatchesFromKeys(keys: KeyRow[]): BatchRow[] {
+  const grouped = new Map<string, KeyRow[]>();
+  keys.forEach((key) => {
+    if (!key.batch_id) return;
+    grouped.set(key.batch_id, [...(grouped.get(key.batch_id) || []), key]);
+  });
+
+  return Array.from(grouped.entries())
+    .map(([batchId, rows]) => {
+      const first = rows.slice().sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())[0];
+      return {
+        batch_id: batchId,
+        batch_size: first.batch_size || rows.length,
+        batch_label: first.batch_label || "Bulk batch",
+        duration_type: first.duration_type,
+        created_at: first.created_at,
+        active_count: rows.filter((k) => k.status === "active").length,
+        unused_count: rows.filter((k) => k.status === "unused").length,
+        revoked_count: rows.filter((k) => k.status === "revoked").length,
+        expired_count: rows.filter((k) => k.status === "expired").length,
+      };
+    })
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+}
 
 /* ---------- copy hook ---------- */
 function useCopy() {
@@ -310,13 +337,17 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
       supabase.rpc("unl_reseller_me"),
       supabase.rpc("unl_reseller_list_bulk_batches"),
     ]);
-    if (k.error) setErr(k.error.message);
-    else setKeys((k.data as KeyRow[]) || []);
+    const messages = [k.error?.message, m.error?.message, b.error?.message].filter(Boolean);
+    if (messages.length > 0) setErr(messages.join(" · "));
+    const nextKeys = k.error ? [] : ((k.data as KeyRow[]) || []);
+    setKeys(nextKeys);
     if (!m.error) {
       const row = Array.isArray(m.data) ? m.data[0] : m.data;
       if (row) setMe(row as ResellerInfo);
     }
-    if (!b.error) setBatches((b.data as BatchRow[]) || []);
+    const rpcBatches = b.error ? [] : ((b.data as BatchRow[]) || []);
+    const derivedBatches = buildBatchesFromKeys(nextKeys);
+    setBatches(rpcBatches.length > 0 ? rpcBatches : derivedBatches);
     setLoading(false);
   }
 
@@ -372,7 +403,8 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
     flash("Key revoked"); load();
   }
 
-  const remaining = me ? Math.max(0, me.quota - me.keys_created) : null;
+  const liveUsed = keys.filter((k) => k.status !== "revoked").length;
+  const remaining = me ? Math.max(0, me.quota - liveUsed) : null;
   const activeCount = keys.filter((k) => k.status === "active").length;
   const unusedCount = keys.filter((k) => k.status === "unused").length;
   const shownKeys = keys.filter((k) => {
@@ -406,7 +438,7 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
       {/* Summary cards */}
       <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
         <SummaryCard icon={<Wallet className="h-4 w-4" />} label="Quota" value={me ? String(me.quota) : "—"} tone="neutral" />
-        <SummaryCard icon={<KeyRound className="h-4 w-4" />} label="Used" value={me ? String(me.keys_created) : "—"} tone="amber" />
+        <SummaryCard icon={<KeyRound className="h-4 w-4" />} label="Used" value={String(liveUsed)} tone="amber" />
         <SummaryCard icon={<TrendingUp className="h-4 w-4" />} label="Remaining" value={remaining != null ? String(remaining) : "—"} tone={remaining != null && remaining > 0 ? "green" : "red"} />
         <SummaryCard icon={<Layers className="h-4 w-4" />} label="Bulk batches" value={String(batches.length)} tone="amber" />
       </div>
@@ -444,17 +476,19 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
         </div>
 
         {/* Bulk batches */}
-        {batches.length > 0 && (
-          <div className="rounded-lg border border-amber-200 bg-amber-50/20 p-4">
-            <div className="mb-3 flex items-center gap-2">
-              <Layers className="h-4 w-4 text-amber-600" />
-              <h2 className="text-sm font-semibold">Bulk batches <span className="text-neutral-400">({batches.length})</span></h2>
-            </div>
+        <div className="rounded-lg border border-amber-200 bg-amber-50/20 p-4">
+          <div className="mb-3 flex items-center gap-2">
+            <Layers className="h-4 w-4 text-amber-600" />
+            <h2 className="text-sm font-semibold">Bulk batches <span className="text-neutral-400">({batches.length})</span></h2>
+          </div>
+          {batches.length > 0 ? (
             <div className="space-y-2">
               {batches.map((b) => <BatchCard key={b.batch_id} batch={b} supabase={supabase} resellerEmail={email} onChanged={load} />)}
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="text-xs text-neutral-500">No bulk batches yet.</p>
+          )}
+        </div>
 
         {/* Single keys table */}
         <div className="rounded-lg border border-neutral-200 bg-white">
