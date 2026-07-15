@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { getUnlSupabase } from "@/lib/unl-supabase";
-import { downloadKeysTxt } from "./admin-og";
+import { downloadKeysTxt } from "@/lib/download-keys";
 
 export const Route = createFileRoute("/resellers-og")({
   ssr: false,
