@@ -417,7 +417,7 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
     }
     setExpandedReseller(resellerId);
     if (!resellerBatches[resellerId]) {
-      const resellerBatchesList = batches.filter((b) => b.reseller_email === resellerEmail);
+      const resellerBatchesList = batches.filter((b) => b.created_by_reseller === resellerId || b.reseller_email === resellerEmail);
       setResellerBatches((prev) => ({ ...prev, [resellerId]: resellerBatchesList }));
     }
   }
@@ -549,7 +549,12 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
             <div className="divide-y divide-neutral-100">
               {resellers.length === 0 && <div className="px-4 py-8 text-center text-xs text-neutral-500">No resellers yet.</div>}
               {resellers.map((r) => {
-                const resellerBatchList = batches.filter((b) => b.reseller_email === r.email);
+                const resellerKeys = keys.filter((k) => k.created_by_reseller === r.id || k.reseller_email === r.email);
+                const liveUsed = resellerKeys.filter((k) => k.status !== "revoked").length;
+                const liveActive = resellerKeys.filter((k) => k.status === "active").length;
+                const liveUnused = resellerKeys.filter((k) => k.status === "unused").length;
+                const liveRevoked = resellerKeys.filter((k) => k.status === "revoked").length;
+                const resellerBatchList = batches.filter((b) => b.created_by_reseller === r.id || b.reseller_email === r.email);
                 const isExpanded = expandedReseller === r.id;
                 return (
                   <div key={r.id} className="px-4 py-3">
@@ -561,7 +566,7 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
                         <div>
                           <div className="text-sm font-medium text-neutral-900">{r.email}</div>
                           <div className="text-[11px] text-neutral-500">
-                            {r.keys_created} / {r.quota} keys used
+                            {liveUsed} / {r.quota} keys used · {Math.max(0, r.quota - liveUsed)} remaining · {liveUnused} unused · {liveActive} active · {liveRevoked} revoked
                             {resellerBatchList.length > 0 && ` · ${resellerBatchList.length} bulk batch${resellerBatchList.length !== 1 ? "es" : ""}`}
                           </div>
                         </div>
