@@ -476,17 +476,19 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
         </div>
 
         {/* Bulk batches */}
-        {batches.length > 0 && (
-          <div className="rounded-lg border border-amber-200 bg-amber-50/20 p-4">
-            <div className="mb-3 flex items-center gap-2">
-              <Layers className="h-4 w-4 text-amber-600" />
-              <h2 className="text-sm font-semibold">Bulk batches <span className="text-neutral-400">({batches.length})</span></h2>
-            </div>
+        <div className="rounded-lg border border-amber-200 bg-amber-50/20 p-4">
+          <div className="mb-3 flex items-center gap-2">
+            <Layers className="h-4 w-4 text-amber-600" />
+            <h2 className="text-sm font-semibold">Bulk batches <span className="text-neutral-400">({batches.length})</span></h2>
+          </div>
+          {batches.length > 0 ? (
             <div className="space-y-2">
               {batches.map((b) => <BatchCard key={b.batch_id} batch={b} supabase={supabase} resellerEmail={email} onChanged={load} />)}
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="text-xs text-neutral-500">No bulk batches yet.</p>
+          )}
+        </div>
 
         {/* Single keys table */}
         <div className="rounded-lg border border-neutral-200 bg-white">
