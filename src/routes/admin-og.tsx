@@ -586,7 +586,7 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
                             </div>
                             <div className="space-y-2">
                               {resellerBatchList.map((b) => (
-                                <BatchCard key={b.batch_id} batch={b} supabase={supabase} isAdmin onChanged={load} />
+                                <BatchCard key={b.batch_id} batch={{ ...b, reseller_email: b.reseller_email || r.email }} supabase={supabase} isAdmin onChanged={load} />
                               ))}
                             </div>
                           </div>
