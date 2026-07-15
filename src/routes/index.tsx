@@ -17,6 +17,7 @@ import {
   TrendingUp,
   ChevronDown,
   Download,
+  X,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -40,6 +41,9 @@ const WHATSAPP_URL =
   );
 
 const EXTENSION_DOWNLOAD_URL = "/api/public/download-extension";
+
+const TUTORIAL_VIDEO_URL =
+  "https://www.dropbox.com/scl/fi/jh32q741zha8vtct6po67/unlimitly-tutorial.mp4?rlkey=uyrfd9v26y48y39so02iu7l1k&raw=1";
 
 /* ---------- primitives ---------- */
 
@@ -239,6 +243,20 @@ function Landing() {
   }, []);
 
   const [openFaq, setOpenFaq] = useState(0);
+  const [videoOpen, setVideoOpen] = useState(false);
+  useEffect(() => {
+    if (!videoOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setVideoOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [videoOpen]);
 
   const tools = [
     "Landing pages",
@@ -448,12 +466,13 @@ function Landing() {
                 Download extension
                 <Download className="h-4 w-4 transition group-hover:translate-y-0.5" />
               </a>
-              <a
-                href="#how"
+              <button
+                type="button"
+                onClick={() => setVideoOpen(true)}
                 className="inline-flex items-center gap-2 rounded-2xl border border-espresso/20 bg-butter px-6 py-4 text-sm font-semibold text-espresso transition hover:-translate-y-0.5 hover:border-gold hover:text-gold"
               >
                 See how it works
-              </a>
+              </button>
             </div>
             <div className="mt-8 flex items-center gap-6 text-xs text-espresso/60">
               <div className="flex -space-x-2">
@@ -1054,6 +1073,55 @@ function Landing() {
           </div>
         </div>
       </footer>
+      {videoOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-espresso/70 p-4 backdrop-blur-md animate-rise"
+          onClick={() => setVideoOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Tutorial video"
+        >
+          <div
+            className="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-[#1B1A17] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* macOS title bar */}
+            <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-b from-[#2a2825] to-[#1f1d1a] px-4 py-3">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setVideoOpen(false)}
+                  aria-label="Close"
+                  className="group h-3.5 w-3.5 rounded-full bg-[#ff5f57] ring-1 ring-black/20 transition hover:brightness-110"
+                />
+                <span className="h-3.5 w-3.5 rounded-full bg-[#febc2e] ring-1 ring-black/20" />
+                <span className="h-3.5 w-3.5 rounded-full bg-[#28c840] ring-1 ring-black/20" />
+              </div>
+              <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-xs font-medium tracking-wide text-white/70">
+                unlimitly-tutorial.mp4
+              </div>
+              <button
+                type="button"
+                onClick={() => setVideoOpen(false)}
+                aria-label="Close video"
+                className="rounded-md p-1 text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            {/* Video */}
+            <div className="aspect-video w-full bg-black">
+              <video
+                src={TUTORIAL_VIDEO_URL}
+                controls
+                autoPlay
+                playsInline
+                className="h-full w-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
