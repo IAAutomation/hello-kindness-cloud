@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { getUnlSupabase } from "@/lib/unl-supabase";
-import { downloadKeysTxt } from "@/lib/download-keys";
 
 export const Route = createFileRoute("/admin-og")({
   ssr: false,
@@ -168,13 +167,6 @@ function AdminDashboard({
   const [clientName, setClientName] = useState("");
   const [creating, setCreating] = useState(false);
 
-  // Bulk create form
-  const [bulkCount, setBulkCount] = useState(10);
-  const [bulkDuration, setBulkDuration] = useState<"1m" | "3m" | "6m" | "1y" | "lifetime">("1m");
-  const [bulkLabel, setBulkLabel] = useState("");
-  const [bulkBusy, setBulkBusy] = useState(false);
-  const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
-
   // Reseller form
   const [rEmail, setREmail] = useState("");
   const [rQuota, setRQuota] = useState(10);
@@ -219,35 +211,6 @@ function AdminDashboard({
       flash("Key created: " + newKey);
     }
     setClientName("");
-    load();
-  }
-
-  async function bulkCreate() {
-    const n = Math.max(1, Math.min(500, Number(bulkCount) || 0));
-    if (!confirm(`Generate ${n} ${bulkDuration} keys?`)) return;
-    setBulkBusy(true);
-    setBulkProgress({ done: 0, total: n });
-    const created: string[] = [];
-    for (let i = 0; i < n; i++) {
-      const clientName = bulkLabel ? `${bulkLabel} #${i + 1}` : null;
-      const { data, error } = await supabase.rpc("unl_admin_create_key", {
-        p_duration: bulkDuration,
-        p_client_name: clientName,
-      });
-      if (error) {
-        alert(`Stopped at ${i}/${n}: ${error.message}`);
-        break;
-      }
-      const k = Array.isArray(data) ? data[0]?.key : (data as any)?.key || data;
-      if (k) created.push(String(k));
-      setBulkProgress({ done: i + 1, total: n });
-    }
-    setBulkBusy(false);
-    setBulkProgress(null);
-    if (created.length > 0) {
-      downloadKeysTxt(created, bulkDuration, bulkLabel || "admin");
-      flash(`Generated ${created.length} keys — file downloaded`);
-    }
     load();
   }
 
@@ -384,52 +347,6 @@ function AdminDashboard({
                 className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:opacity-50"
               >
                 {creating ? "Creating…" : "Generate key"}
-              </button>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-neutral-200 bg-white p-4">
-            <h2 className="mb-1 text-sm font-semibold">Bulk generate</h2>
-            <p className="mb-3 text-xs text-neutral-500">
-              Generate up to 500 keys at once. A .txt file with all keys downloads automatically.
-            </p>
-            <div className="flex flex-wrap items-center gap-2">
-              <input
-                type="number"
-                min={1}
-                max={500}
-                value={bulkCount}
-                onChange={(e) => setBulkCount(Number(e.target.value))}
-                className="w-24 rounded-md border border-neutral-300 px-3 py-2 text-sm"
-                title="Number of keys"
-              />
-              <select
-                value={bulkDuration}
-                onChange={(e) => setBulkDuration(e.target.value as any)}
-                className="rounded-md border border-neutral-300 px-3 py-2 text-sm"
-              >
-                <option value="1m">1 month</option>
-                <option value="3m">3 months</option>
-                <option value="6m">6 months</option>
-                <option value="1y">1 year</option>
-                <option value="lifetime">Lifetime</option>
-              </select>
-              <input
-                placeholder="Batch label (optional, e.g. Reseller-A)"
-                value={bulkLabel}
-                onChange={(e) => setBulkLabel(e.target.value)}
-                className="flex-1 min-w-[200px] rounded-md border border-neutral-300 px-3 py-2 text-sm"
-              />
-              <button
-                onClick={bulkCreate}
-                disabled={bulkBusy}
-                className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:opacity-50"
-              >
-                {bulkBusy
-                  ? bulkProgress
-                    ? `Generating ${bulkProgress.done}/${bulkProgress.total}…`
-                    : "Generating…"
-                  : "Generate & download .txt"}
               </button>
             </div>
           </div>
