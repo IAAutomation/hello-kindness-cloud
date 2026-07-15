@@ -1073,6 +1073,55 @@ function Landing() {
           </div>
         </div>
       </footer>
+      {videoOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-espresso/70 p-4 backdrop-blur-md animate-rise"
+          onClick={() => setVideoOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Tutorial video"
+        >
+          <div
+            className="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-[#1B1A17] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* macOS title bar */}
+            <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-b from-[#2a2825] to-[#1f1d1a] px-4 py-3">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setVideoOpen(false)}
+                  aria-label="Close"
+                  className="group h-3.5 w-3.5 rounded-full bg-[#ff5f57] ring-1 ring-black/20 transition hover:brightness-110"
+                />
+                <span className="h-3.5 w-3.5 rounded-full bg-[#febc2e] ring-1 ring-black/20" />
+                <span className="h-3.5 w-3.5 rounded-full bg-[#28c840] ring-1 ring-black/20" />
+              </div>
+              <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-xs font-medium tracking-wide text-white/70">
+                unlimitly-tutorial.mp4
+              </div>
+              <button
+                type="button"
+                onClick={() => setVideoOpen(false)}
+                aria-label="Close video"
+                className="rounded-md p-1 text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            {/* Video */}
+            <div className="aspect-video w-full bg-black">
+              <video
+                src={TUTORIAL_VIDEO_URL}
+                controls
+                autoPlay
+                playsInline
+                className="h-full w-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
