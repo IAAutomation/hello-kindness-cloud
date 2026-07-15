@@ -345,6 +345,7 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
   const [rEmail, setREmail] = useState("");
   const [rQuota, setRQuota] = useState(10);
   const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [search, setSearch] = useState<string>("");
   const [expandedReseller, setExpandedReseller] = useState<string | null>(null);
   const [resellerBatches, setResellerBatches] = useState<Record<string, BatchRow[]>>({});
 
@@ -421,7 +422,19 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
     }
   }
 
-  const shown = useMemo(() => (filterStatus === "all" ? keys : keys.filter((k) => k.status === filterStatus)), [keys, filterStatus]);
+  const shown = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return keys.filter((k) => {
+      if (filterStatus !== "all" && k.status !== filterStatus) return false;
+      if (!q) return true;
+      return (
+        k.key.toLowerCase().includes(q) ||
+        (k.client_name || "").toLowerCase().includes(q) ||
+        (k.reseller_email || "").toLowerCase().includes(q) ||
+        (k.device_fingerprint || "").toLowerCase().includes(q)
+      );
+    });
+  }, [keys, filterStatus, search]);
 
   return (
     <Shell>
@@ -447,21 +460,6 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
 
       {tab === "keys" && (
         <section className="space-y-6">
-          {/* Bulk batches section */}
-          {batches.length > 0 && (
-            <div className="rounded-lg border border-amber-200 bg-amber-50/30 p-4">
-              <div className="mb-3 flex items-center gap-2">
-                <Layers className="h-4 w-4 text-amber-600" />
-                <h2 className="text-sm font-semibold">Bulk Batches <span className="text-neutral-400">({batches.length})</span></h2>
-              </div>
-              <div className="space-y-2">
-                {batches.map((b) => (
-                  <BatchCard key={b.batch_id} batch={b} supabase={supabase} showReseller isAdmin onChanged={load} />
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Single keys */}
           <div className="rounded-lg border border-neutral-200 bg-white p-4">
             <h2 className="mb-3 text-sm font-semibold">Create a single key</h2>
@@ -476,10 +474,19 @@ function AdminDashboard({ supabase, email }: { supabase: ReturnType<typeof getUn
 
           <div className="rounded-lg border border-neutral-200 bg-white">
             <div className="flex items-center justify-between border-b border-neutral-200 px-4 py-3">
-              <h2 className="text-sm font-semibold">Single keys <span className="text-neutral-400">({shown.length})</span></h2>
-              <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="rounded-md border border-neutral-300 px-2 py-1 text-xs">
-                <option value="all">All statuses</option><option value="unused">Unused</option><option value="active">Active</option><option value="revoked">Revoked</option><option value="expired">Expired</option>
-              </select>
+              <h2 className="text-sm font-semibold">Single keys <span className="text-neutral-400">({shown.length}/{keys.length})</span></h2>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search key, client, reseller, device…"
+                  className="w-64 rounded-md border border-neutral-300 px-2 py-1 text-xs outline-none focus:border-neutral-900"
+                />
+                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="rounded-md border border-neutral-300 px-2 py-1 text-xs">
+                  <option value="all">All statuses</option><option value="unused">Unused</option><option value="active">Active</option><option value="revoked">Revoked</option><option value="expired">Expired</option>
+                </select>
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">

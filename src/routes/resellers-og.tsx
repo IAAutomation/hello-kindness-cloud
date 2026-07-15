@@ -300,6 +300,8 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
   const [bulkPrefix, setBulkPrefix] = useState("");
   const [bulkBusy, setBulkBusy] = useState(false);
   const [bulkErr, setBulkErr] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
 
   async function load() {
     setLoading(true); setErr(null);
@@ -373,6 +375,16 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
   const remaining = me ? Math.max(0, me.quota - me.keys_created) : null;
   const activeCount = keys.filter((k) => k.status === "active").length;
   const unusedCount = keys.filter((k) => k.status === "unused").length;
+  const shownKeys = keys.filter((k) => {
+    if (filterStatus !== "all" && k.status !== filterStatus) return false;
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      k.key.toLowerCase().includes(q) ||
+      (k.client_name || "").toLowerCase().includes(q) ||
+      (k.device_fingerprint || "").toLowerCase().includes(q)
+    );
+  });
 
   return (
     <Shell>
@@ -448,8 +460,20 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
         <div className="rounded-lg border border-neutral-200 bg-white">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 px-4 py-3">
             <div>
-              <h2 className="text-sm font-semibold">Single keys <span className="text-neutral-400">({keys.length})</span></h2>
+              <h2 className="text-sm font-semibold">Single keys <span className="text-neutral-400">({shownKeys.length}/{keys.length})</span></h2>
               <p className="mt-0.5 text-[11px] text-neutral-400">{unusedCount} unused · {activeCount} active · {keys.length - unusedCount - activeCount} other</p>
+            </div>
+            <div className="flex flex-1 flex-wrap items-center gap-2">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search key, client, device…"
+                className="w-64 rounded-md border border-neutral-300 px-2 py-1 text-xs outline-none focus:border-neutral-900"
+              />
+              <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="rounded-md border border-neutral-300 px-2 py-1 text-xs">
+                <option value="all">All statuses</option><option value="unused">Unused</option><option value="active">Active</option><option value="revoked">Revoked</option><option value="expired">Expired</option>
+              </select>
             </div>
             {keys.length > 0 && (
               <div className="flex flex-wrap items-center gap-1.5">
@@ -474,8 +498,8 @@ function ResellerDashboard({ supabase, email }: { supabase: ReturnType<typeof ge
               </thead>
               <tbody>
                 {loading && <tr><td colSpan={7} className="px-3 py-8 text-center text-neutral-500">Loading…</td></tr>}
-                {!loading && keys.length === 0 && <tr><td colSpan={7} className="px-3 py-8 text-center text-neutral-500">No single keys yet.</td></tr>}
-                {keys.map((k) => (
+                {!loading && shownKeys.length === 0 && <tr><td colSpan={7} className="px-3 py-8 text-center text-neutral-500">No matching keys.</td></tr>}
+                {shownKeys.map((k) => (
                   <tr key={k.key} className="border-t border-neutral-100 transition hover:bg-amber-50/40">
                     <td className="px-3 py-2">
                       <div className="flex items-center gap-1.5">
