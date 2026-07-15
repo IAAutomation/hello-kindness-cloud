@@ -167,6 +167,13 @@ function AdminDashboard({
   const [clientName, setClientName] = useState("");
   const [creating, setCreating] = useState(false);
 
+  // Bulk create form
+  const [bulkCount, setBulkCount] = useState(10);
+  const [bulkDuration, setBulkDuration] = useState<"1m" | "3m" | "6m" | "1y" | "lifetime">("1m");
+  const [bulkLabel, setBulkLabel] = useState("");
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
+
   // Reseller form
   const [rEmail, setREmail] = useState("");
   const [rQuota, setRQuota] = useState(10);
@@ -211,6 +218,35 @@ function AdminDashboard({
       flash("Key created: " + newKey);
     }
     setClientName("");
+    load();
+  }
+
+  async function bulkCreate() {
+    const n = Math.max(1, Math.min(500, Number(bulkCount) || 0));
+    if (!confirm(`Generate ${n} ${bulkDuration} keys?`)) return;
+    setBulkBusy(true);
+    setBulkProgress({ done: 0, total: n });
+    const created: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const clientName = bulkLabel ? `${bulkLabel} #${i + 1}` : null;
+      const { data, error } = await supabase.rpc("unl_admin_create_key", {
+        p_duration: bulkDuration,
+        p_client_name: clientName,
+      });
+      if (error) {
+        alert(`Stopped at ${i}/${n}: ${error.message}`);
+        break;
+      }
+      const k = Array.isArray(data) ? data[0]?.key : (data as any)?.key || data;
+      if (k) created.push(String(k));
+      setBulkProgress({ done: i + 1, total: n });
+    }
+    setBulkBusy(false);
+    setBulkProgress(null);
+    if (created.length > 0) {
+      downloadKeysTxt(created, bulkDuration, bulkLabel || "admin");
+      flash(`Generated ${created.length} keys — file downloaded`);
+    }
     load();
   }
 
