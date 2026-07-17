@@ -198,32 +198,8 @@
     Object.defineProperty(window, '_pkS', { configurable: false, writable: false });
   } catch(e) {}
 
-  document.addEventListener('contextmenu', function(e) {
-    if (_isExtUI(e.target)) return;
-    e.preventDefault(); return false;
-  });
-  document.addEventListener('selectstart', function(e) {
-    if (_isExtUI(e.target)) return;
-    e.preventDefault(); return false;
-  });
-  document.addEventListener('copy', function(e) {
-    if (_isExtUI(e.target)) return;
-    e.preventDefault(); return false;
-  });
-  document.addEventListener('cut', function(e) {
-    if (_isExtUI(e.target)) return;
-    e.preventDefault(); return false;
-  });
-  document.addEventListener('paste', function(e) {
-    if (_isExtUI(e.target)) return;
-    e.preventDefault(); return false;
-  });
-  document.addEventListener('keydown', function(e) {
-    if (_isExtUI(e.target)) return;
-    if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'a' || e.key === 'x' || e.key === 'v')) {
-      e.preventDefault();
-      return false;
-    }
-    if (e.key === 'F12') { e.preventDefault(); return false; }
-  });
+  // NOTE: Global copy/paste/cut/contextmenu/keydown blockers removed —
+  // they were breaking normal clipboard usage on lovable.dev.
+  // Only the extension's own UI needs protection, and that lives inside
+  // shadow DOM / isolated containers already.
 })();

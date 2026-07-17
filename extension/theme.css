@@ -1,6 +1,6 @@
 :root {
-  /* Unlimitly · Editorial Ivory & Gold — light-first, matches landing site. */
-  color-scheme: light;
+  /* Unlimitly · Editorial Ivory & Gold — tokens only, do NOT force
+     color-scheme on the host page (that inverts lovable.dev dark mode). */
   --ql-bg: #FBF8F1;            /* warm ivory canvas */
   --ql-bg-elevated: #FFFDF7;   /* near-white paper */
   --ql-bg-surface: #F5EEDD;    /* soft sand */
