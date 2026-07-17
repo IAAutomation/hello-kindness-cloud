@@ -1,4 +1,4 @@
-:root, #ql-floating {
+#ql-floating, body.sp-extension-page {
   /* Unlimitly · Editorial Ivory & Gold — tokens only, do NOT force
      color-scheme on the host page (that inverts lovable.dev dark mode). */
   --ql-bg: #FBF8F1;            /* warm ivory canvas */
