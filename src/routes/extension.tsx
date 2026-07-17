@@ -43,7 +43,7 @@ function ExtensionDownloadPage() {
         <section className="mt-10 flex flex-col items-center text-center animate-rise">
           <span className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-gold)]/40 bg-white/60 px-4 py-1.5 text-[11px] uppercase tracking-[0.22em] text-[color:var(--color-gold)] shadow-sm backdrop-blur">
             <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--color-gold)] animate-pulse" />
-            Chrome extension · v1.1.7 · one zip
+            Chrome extension · v1.2.1 · one zip
           </span>
 
           <h1 className="mt-6 font-display text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight">

@@ -27,7 +27,7 @@
   }
 
   _f('EXTENSION_NAME', 'Unlimitly by Proflow Tools');
-  _f('EXTENSION_VERSION', '1.1.7');
+  _f('EXTENSION_VERSION', '1.2.1');
   _f('DEFAULT_LICENSE_USER_NAME', 'Unlimitly by Proflow Tools User');
   _f('POWERKITS_API_BASE', _e.b);
   _f('POWERKITS_API_KEY', _e.k);
