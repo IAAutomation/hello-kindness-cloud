@@ -1431,36 +1431,26 @@ function setupShield(){
   const btn = document.getElementById("ql-shield-btn");
   if(!btn) return;
 
-  chrome.storage.local.get(["ql_shield_active"], (res) => {
-    if(res.ql_shield_active === true) {
-      qlShieldActive = true;
-      btn.classList.add("ql-shield-active");
-      const label = document.getElementById("ql-shield-label");
-      if(label) label.textContent = "Disable Shield";
-      injectShieldOverlay();
-    }
-  });
+  qlShieldActive = false;
+  chrome.storage.local.set({ ql_shield_active: false });
+  removeShieldOverlay();
+
+  btn.classList.remove("ql-shield-active");
+  const label = document.getElementById("ql-shield-label");
+  if(label) label.textContent = "Shield Off";
 
   btn.addEventListener("click", () => {
-    qlShieldActive = !qlShieldActive;
-    chrome.storage.local.set({ ql_shield_active: qlShieldActive });
-
-    const label = document.getElementById("ql-shield-label");
-    if(qlShieldActive) {
-      btn.classList.add("ql-shield-active");
-      if(label) label.textContent = "Disable Shield";
-      injectShieldOverlay();
-      showCustomAlert("Shield Enabled 🛡️", "The Lovable input is locked. Use the extension to send prompts.");
-    } else {
-      btn.classList.remove("ql-shield-active");
-      if(label) label.textContent = "Enable Shield";
-      removeShieldOverlay();
-      showCustomAlert("Shield Disabled", "The Lovable input is unlocked again.");
-    }
+    qlShieldActive = false;
+    chrome.storage.local.set({ ql_shield_active: false });
+    btn.classList.remove("ql-shield-active");
+    if(label) label.textContent = "Shield Off";
+    removeShieldOverlay();
+    showCustomAlert("Shield Off", "Lovable copy, paste, cut, and typing stay unlocked.");
   });
 }
 
 function injectShieldOverlay(){
+  return;
   if(document.getElementById("ql-shield-overlay")) return;
 
   const chatForm = document.querySelector('form#chat-input');
@@ -2956,9 +2946,9 @@ chrome.runtime.onMessage.addListener(function(msg, _sender, sendResponse) {
     return false;
   }
   if (msg && msg.action === "setShieldActive") {
-    qlShieldActive = !!msg.active;
-    if (qlShieldActive) injectShieldOverlay();
-    else removeShieldOverlay();
+    qlShieldActive = false;
+    chrome.storage.local.set({ ql_shield_active: false });
+    removeShieldOverlay();
     sendResponse({ ok: true });
     return false;
   }

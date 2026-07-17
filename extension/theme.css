@@ -1,4 +1,4 @@
-:root {
+#ql-floating, body.sp-extension-page {
   /* Unlimitly · Editorial Ivory & Gold — tokens only, do NOT force
      color-scheme on the host page (that inverts lovable.dev dark mode). */
   --ql-bg: #FBF8F1;            /* warm ivory canvas */
@@ -38,7 +38,7 @@
   --ql-font-display: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
 }
 
-body.sp-light, #ql-floating.ql-light {
+body.sp-extension-page.sp-light, #ql-floating.ql-light {
   /* Sp-light stays close to the default ivory theme (already light-first). */
   color-scheme: light;
   --ql-bg: #FFFDF7;
@@ -67,7 +67,7 @@ body.sp-light, #ql-floating.ql-light {
 }
 
 /* Opt-in Noir dark mode for users who toggle it (keeps the same gold accent). */
-body.sp-dark, #ql-floating.ql-dark {
+body.sp-extension-page.sp-dark, #ql-floating.ql-dark {
   color-scheme: dark;
   --ql-bg: #0d0d0d;
   --ql-bg-elevated: #141414;
@@ -89,7 +89,7 @@ body.sp-dark, #ql-floating.ql-dark {
   --ql-modal-surface: #1a1a1a;
 }
 
-body {
+body.sp-extension-page {
   background: var(--ql-bg);
   font-family: var(--ql-font);
   color: var(--ql-text-primary);
